@@ -6,16 +6,16 @@ siteHeader();
 <main id="main">
     <div class="opening" id="top">
         <section class="hero hero--immersive" aria-label="주민의 음식 이야기 전시">
-            <div class="hero-visual">
+            <div class="hero-visual hero-slider swiper" tabindex="0" role="region" aria-roledescription="캐러셀" aria-label="주민 사진 슬라이드"><div class="swiper-wrapper">
                 <?php foreach ($content['sequence'] as $i => $image): $owner = ownerOf($image); ?>
-                    <figure class="hero-scene <?= $i === 0 ? 'is-active' : '' ?>" data-owner="<?= $owner['id'] ?>" data-photo="<?= e($image) ?>" <?= $i ? 'aria-hidden="true"' : '' ?>><?php if ($i): ?><template><?php photo($image, '', false, null, '100vw'); ?></template><?php else: photo($image, '', true, null, '100vw'); endif; ?></figure>
+                    <figure class="hero-scene swiper-slide <?= $i === 0 ? 'is-active' : '' ?>" data-owner="<?= $owner['id'] ?>" data-photo="<?= e($image) ?>"><?php photo($image, '', $i === 0, null, '100vw'); ?></figure>
                 <?php endforeach; ?>
-            </div>
+            </div></div>
             <div class="hero-shade" aria-hidden="true"></div>
             <div class="hero-content">
                 <h1 class="hero-title"><span>MAP</span> <span>TO</span> <span>TABLE</span></h1>
                 <p class="hero-subcopy">제주 신촌의 음식, 삶, 기억을 담은 온라인 전시.</p>
-                <div class="hero-progress" role="progressbar" aria-label="오프닝 사진 진행" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span class="hero-progress-fill"></span></div>
+                <div class="hero-footer"><div class="hero-progress" role="progressbar" aria-label="히어로 사진 진행" aria-valuemin="1" aria-valuemax="<?= count($content['sequence']) ?>" aria-valuenow="1"><span class="hero-progress-fill"></span></div><div class="hero-controls"><span class="hero-count" aria-live="polite" aria-atomic="true">1 / <?= count($content['sequence']) ?></span><button class="icon-button hero-prev" type="button" aria-label="히어로 이전 사진" disabled><?= icon('arrow-left') ?></button><button class="icon-button hero-next" type="button" aria-label="히어로 다음 사진"><?= icon('arrow-right') ?></button></div></div>
             </div>
         </section>
     </div>

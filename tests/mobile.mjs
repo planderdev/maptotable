@@ -31,6 +31,20 @@ for(const [name,engine,device,options] of [
     }
     await page.locator('.menu-toggle').click();await page.keyboard.press('Escape');check('Menu closes',await page.locator('#mobile-menu').evaluate(el=>!el.open));
     await page.goto('http://127.0.0.1:8080/',{waitUntil:'networkidle'});
+    check('Mobile hero has no pinned scroll',await page.locator('.opening').evaluate(el=>!el.classList.contains('is-pinned')&&Math.abs(el.getBoundingClientRect().height-innerHeight)<2&&!ScrollTrigger.getById('opening')));
+    if(engine===chromium){
+      const heroTouch=await context.newCDPSession(page),heroBox=await page.locator('.hero-slider').boundingBox();
+      const hx=heroBox.width*.82,hy=heroBox.height*.5;
+      await heroTouch.send('Input.dispatchTouchEvent',{type:'touchStart',touchPoints:[{x:hx,y:hy}]});
+      for(let i=1;i<=12;i++)await heroTouch.send('Input.dispatchTouchEvent',{type:'touchMove',touchPoints:[{x:hx-i*20,y:hy}]});
+      await heroTouch.send('Input.dispatchTouchEvent',{type:'touchEnd',touchPoints:[]});await page.waitForTimeout(650);
+      check('Hero actual touch swipe updates counter',await page.locator('.hero-count').innerText()==='2 / 6');
+    }else{
+      await page.locator('.hero-next').click();await page.waitForTimeout(650);
+      check('Hero mobile next control updates counter',await page.locator('.hero-count').innerText()==='2 / 6');
+    }
+    check('Mobile hero controls fit at lower right',await page.locator('.hero-controls').evaluate(el=>{const b=el.getBoundingClientRect();return b.right<=innerWidth&&b.left>innerWidth/2&&b.bottom<=innerHeight&&b.bottom>innerHeight-60;}));
+    if(engine===chromium)await page.screenshot({path:'docs/screenshots/hero-swipe-mobile.png'});
     const introPin=await page.evaluate(()=>{const t=ScrollTrigger.getById('introduction');return {start:t.start,end:t.end};});
     for(const progress of [.2,.7,1,.2]){
       await page.evaluate(({introPin,progress})=>{scrollTo(0,introPin.start+(introPin.end-introPin.start)*progress);ScrollTrigger.update();},{introPin,progress});

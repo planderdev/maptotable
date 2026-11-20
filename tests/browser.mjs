@@ -24,6 +24,7 @@ try {
       check(`Fonts loaded ${width} ${path}`,metrics.fonts);
       check(`Images loaded ${width} ${path}`,metrics.broken.length===0);
       if(path==='/index.html')check(`Full bleed viewport hero ${width}`,metrics.hero.width===width&&metrics.hero.height===1000&&metrics.hero.x===0&&metrics.hero.y===0);
+      if(width>=768)check(`Header navigation centered without overlap ${width} ${path}`,await page.locator('.desktop-nav').evaluate(nav=>{const n=nav.getBoundingClientRect(),logo=document.querySelector('.site-header .wordmark').getBoundingClientRect(),join=document.querySelector('.header-join').getBoundingClientRect();return Math.abs(n.left+n.width/2-innerWidth/2)<1&&logo.right+8<n.left&&n.right+8<join.left;}));
       results.widths.push({width,path,...metrics});
       if ([390,1440].includes(width)) await page.screenshot({path:`docs/screenshots/${path.includes('design-system')?'design-system':path.includes('story')?'story':path.includes('join')?'join':'home'}-${width}.png`,fullPage:false});
       if(path==='/index.html'){
@@ -36,7 +37,10 @@ try {
         check(`Full bleed program rail ${width}`,program.x===0&&program.width===program.viewport);
         check(`Program spaceBetween ${width}`,Math.abs(program.gap-gap)<1&&program.configured===gap);
         check(`Program heading and first card align ${width}`,Math.abs(program.inset-program.heading)<1&&program.free);
-        if([390,1440].includes(width))await page.screenshot({path:`docs/screenshots/program-fullbleed-${width}.png`});
+        if([390,1440].includes(width)){
+          await page.waitForFunction(()=>getComputedStyle(document.querySelector('.program-card')).opacity==='1');
+          await page.screenshot({path:`docs/screenshots/program-fullbleed-${width}.png`});
+        }
       }
     }
   }
@@ -56,14 +60,27 @@ try {
   check('Three published entries',await page.locator('.story-card[data-status=published] a').count()===3);
   check('Pending stories not rendered',await page.locator('.story-card[data-status=pending]').count()===0);
   check('Story section white with three-line heading',await page.locator('.stories-rise').evaluate(el=>getComputedStyle(el).backgroundColor==='rgb(255, 255, 255)'&&[...el.querySelectorAll('h2 span')].map(s=>s.textContent).join('/')==='음식/삶/기억'&&!el.querySelector('.section-heading p')));
-  const pin = await page.evaluate(()=>{const t=ScrollTrigger.getById('opening');return {start:t.start,end:t.end};});
-  for (const i of [0,1,2,3,4,5,2,0,5]) {
-    await page.evaluate(({pin,i})=>{scrollTo(0,pin.start+(pin.end-pin.start)*(i+.15)/6);ScrollTrigger.update();},{pin,i});
-    await page.waitForTimeout(50);
-    const actual=await page.evaluate(()=>({index:Number(document.querySelector('.opening').dataset.currentScene),owner:Number(document.querySelector('.hero-scene.is-active').dataset.owner),progress:Number(document.querySelector('.hero-progress').getAttribute('aria-valuenow'))}));
-    check(`Forward/reverse hero mapping ${i}`,actual.index===i&&actual.owner===Math.floor(i/2)+1&&Math.abs(actual.progress-(i+.15)/6*100)<1);
+  check('Hero has no pin or extra scroll height',await page.evaluate(()=>!ScrollTrigger.getById('opening')&&!document.querySelector('.opening').classList.contains('is-pinned')&&document.querySelector('.opening').offsetHeight===1000&&getComputedStyle(document.querySelector('.hero')).position==='relative'));
+  check('Hero previous control disabled at first photo',await page.locator('.hero-prev').isDisabled());
+  for(const i of [0,1,2,3,4,5,4,3,2,1,0]){
+    if(i>0&&i<=5&&Number(await page.locator('.opening').getAttribute('data-current-scene'))<i)await page.locator('.hero-next').click();
+    else if(Number(await page.locator('.opening').getAttribute('data-current-scene'))>i)await page.locator('.hero-prev').click();
+    await page.waitForTimeout(600);
+    const actual=await page.evaluate(()=>({index:Number(document.querySelector('.opening').dataset.currentScene),owner:Number(document.querySelector('.hero-scene.is-active').dataset.owner),progress:Number(document.querySelector('.hero-progress').getAttribute('aria-valuenow')),count:document.querySelector('.hero-count').textContent}));
+    check(`Hero button navigation preserves photo mapping ${i}`,actual.index===i&&actual.owner===Math.floor(i/2)+1&&actual.progress===i+1&&actual.count===`${i+1} / 6`);
+    if(i===5)check('Hero next control disabled at last photo',await page.locator('.hero-next').isDisabled());
   }
-  check('Hero contains title, subcopy and progress', await page.locator('.hero-content').evaluate(el=>el.children.length===3&&!!el.querySelector('h1')&&!!el.querySelector('.hero-subcopy')&&!!el.querySelector('[role=progressbar]')&&!el.querySelector('a,button')));
+  const heroBox=await page.locator('.hero-slider').boundingBox();
+  await page.mouse.move(heroBox.width*.8,heroBox.height*.45);await page.mouse.down();await page.mouse.move(heroBox.width*.2,heroBox.height*.45,{steps:14});await page.mouse.up();await page.waitForTimeout(600);
+  check('Hero mouse drag advances photo',await page.locator('.opening').getAttribute('data-current-scene')==='1');
+  await page.locator('.hero-slider').press('ArrowRight');await page.waitForTimeout(600);
+  check('Hero keyboard right advances photo',await page.locator('.hero-count').innerText()==='3 / 6');
+  await page.locator('.hero-slider').press('ArrowLeft');await page.waitForTimeout(600);
+  check('Hero keyboard left restores previous photo',await page.locator('.hero-count').innerText()==='2 / 6');
+  await page.evaluate(()=>scrollTo(0,450));await page.waitForTimeout(200);
+  check('Vertical scroll leaves hero photo unchanged and moves hero out',await page.locator('.hero').evaluate(el=>Math.abs(el.getBoundingClientRect().top+450)<2&&document.querySelector('.opening').dataset.currentScene==='1'));
+  await page.evaluate(()=>scrollTo(0,0));
+  check('Hero retains title, subcopy and lower-right navigation',await page.locator('.hero-content').evaluate(el=>!!el.querySelector('h1')&&!!el.querySelector('.hero-subcopy')&&!!el.querySelector('[role=progressbar]')&&el.querySelectorAll('button').length===2&&el.querySelector('.hero-controls').getBoundingClientRect().left>innerWidth/2));
   check('Neutral token is exact',await page.evaluate(()=>getComputedStyle(document.documentElement).getPropertyValue('--neutral-900').trim()==='#121212'));
   check('Header record link is primary',await page.locator('.header-join').evaluate(el=>el.classList.contains('button--primary')&&getComputedStyle(el).backgroundColor==='rgb(240, 130, 58)'));
   check('Visible media captions and attribution removed',await page.locator('figcaption,a[href*="pixabay"]').count()===0);
@@ -198,6 +215,8 @@ try {
   check('Reduced motion disables AOS styling',await page.evaluate(()=>!document.documentElement.classList.contains('aos-ready')));
   check('Reduced AOS content remains readable',await page.locator('[data-aos]').evaluateAll(elements=>elements.every(el=>getComputedStyle(el).opacity==='1'&&getComputedStyle(el).transform==='none')));
   check('Reduced motion removes pin',await page.locator('.opening').evaluate(el=>!el.classList.contains('is-pinned')));
+  check('Reduced hero transitions instantly',await page.locator('.hero-slider').evaluate(el=>el.swiper.params.speed===0));
+  await page.locator('.hero-next').click();check('Reduced hero remains navigable',await page.locator('.hero-count').innerText()==='2 / 6');
   check('Reduced marquee remains static',await page.locator('.photo-marquee-track').evaluate(el=>getComputedStyle(el).animationName==='none'));
   check('Reduced intro lines are readable',await page.locator('.intro-mask-text').evaluateAll(lines=>lines.every(el=>getComputedStyle(el).opacity==='1')));
   check('Reduced motion removes introduction pin',await page.locator('.intro-narrative').evaluate(el=>!el.classList.contains('is-pinned')));
@@ -208,10 +227,13 @@ try {
   const nojs=await browser.newPage({javaScriptEnabled:false,viewport:{width:390,height:844}});
   await nojs.goto(base+'/index.html');check('No JS story links',await nojs.locator('.story-card a').count()===3);
   check('No JS AOS content stays visible',await nojs.locator('[data-aos]').evaluateAll(elements=>elements.every(el=>getComputedStyle(el).opacity==='1')));
+  check('No JS hero exposes six native-scroll photos',await nojs.locator('.hero-slider').evaluate(el=>el.querySelectorAll('img').length===6&&getComputedStyle(el).overflowX==='auto'));
   check('No JS introduction keeps all three paragraphs readable',await nojs.locator('.intro-sentence').evaluateAll(rows=>rows.length===3&&rows.every((row,i)=>getComputedStyle(row).transform==='none'&&(i===0||row.getBoundingClientRect().top>=rows[i-1].getBoundingClientRect().bottom))));
   await nojs.goto(base+'/join.html');check('No JS all questions readable',await nojs.locator('.join-step:not(.join-done)').count()===5);await nojs.close();
   const blocked=await browser.newPage({viewport:{width:390,height:844}});await blocked.route('**/vendor/**',r=>r.abort());await blocked.goto(base+'/index.html');
-  check('Library failure keeps stories readable',await blocked.locator('.story-card a').count()===3&&await blocked.locator('.hero-title').isVisible());await blocked.close();
+  check('Library failure keeps stories readable',await blocked.locator('.story-card a').count()===3&&await blocked.locator('.hero-title').isVisible());
+  await blocked.locator('.hero-next').click();await blocked.waitForFunction(()=>document.querySelector('.hero-count').textContent==='2 / 6');
+  check('Library failure keeps native hero controls usable',await blocked.locator('.hero-slider').evaluate(el=>!el.swiper&&el.scrollLeft>0));await blocked.close();
   const noAos=await browser.newPage({viewport:{width:390,height:844}});await noAos.route('**/vendor/aos.js',r=>r.abort());await noAos.goto(base+'/index.html',{waitUntil:'networkidle'});
   check('AOS load failure leaves content visible',await noAos.locator('[data-aos]').evaluateAll(elements=>elements.every(el=>getComputedStyle(el).opacity==='1')));await noAos.close();
   check('No JavaScript errors',results.errors.length===0);check('No broken local requests',results.brokenRequests.length===0);

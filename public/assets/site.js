@@ -22,67 +22,57 @@
     dialog.addEventListener('close', () => { toggle.setAttribute('aria-expanded', 'false'); toggle.focus({ preventScroll: true }); });
   }
   function opening() {
-    const wrap = $('.opening');
-    if (!wrap) return;
-    const scenes = $$('.hero-scene', wrap), progress = $('.hero-progress', wrap);
-    const fill = $('.hero-progress-fill', wrap), title = $('.hero-title', wrap);
-    let current = -1;
-    function hydrate(index) {
-      const scene = scenes[index];
-      if (!scene) return;
-      const template = $('template', scene);
-      if (template) {
-        scene.append(template.content.cloneNode(true)); template.remove();
-        $('img', scene).loading = 'eager';
-      }
-    }
-    function render(value) {
-      const position = value * scenes.length;
-      const index = Math.min(scenes.length - 1, Math.floor(position));
-      const phase = Math.min(1, position - index);
-      hydrate(index);
-      const blend = Math.max(0, (phase - .7) / .3);
-      if (blend > 0) hydrate(index + 1);
-      if (current !== index) {
-        current = index;
-        wrap.dataset.currentScene = String(index);
-        scenes.forEach((scene, i) => {
-          scene.classList.toggle('is-active', i === index);
-          scene.setAttribute('aria-hidden', String(i !== index));
-        });
-      }
+    const wrap = $('.opening'), element = $('.hero-slider', wrap || document);
+    if (!wrap || !element || wrap.classList.contains('has-hero-slider')) return;
+    const scenes = $$('.hero-scene', element), progress = $('.hero-progress', wrap);
+    const count = $('.hero-count', wrap), previous = $('.hero-prev', wrap), next = $('.hero-next', wrap);
+    let current = 0, slider = null;
+    function render(index) {
+      current = Math.max(0, Math.min(scenes.length - 1, index));
+      wrap.dataset.currentScene = String(current);
       scenes.forEach((scene, i) => {
-        const visible = i === index || (i === index + 1 && blend > 0);
-        scene.style.visibility = visible ? 'visible' : 'hidden';
-        scene.style.opacity = i === index ? '1' : i === index + 1 ? String(blend) : '0';
+        scene.classList.toggle('is-active', i === current);
+        scene.setAttribute('aria-hidden', String(i !== current));
       });
-      const image = $('img', scenes[index]);
-      if (image) image.style.transform = `scale(${1.065 - phase * .065})`;
-      const upcoming = scenes[index + 1] && $('img', scenes[index + 1]);
-      if (upcoming) upcoming.style.transform = `scale(${1.065 - blend * .015})`;
-      fill.style.transform = `scaleX(${value})`;
-      progress.setAttribute('aria-valuenow', String(Math.round(value * 100)));
-      title.style.transform = `translateY(${-value * 12}px)`;
+      const label = `${current + 1} / ${scenes.length}`;
+      if (count.textContent !== label) count.textContent = label;
+      progress.setAttribute('aria-valuenow', String(current + 1));
+      $('.hero-progress-fill', wrap).style.transform = `scaleX(${(current + 1) / scenes.length})`;
+      previous.disabled = current === 0;
+      next.disabled = current === scenes.length - 1;
     }
-    hydrate(0);
-    if (!window.gsap || !window.ScrollTrigger) return;
-    gsap.registerPlugin(ScrollTrigger);
-    const mm = gsap.matchMedia();
-    mm.add('(prefers-reduced-motion: no-preference)', () => {
-      wrap.classList.add('is-pinned');
-      const trigger = ScrollTrigger.create({
-        id: 'opening', trigger: wrap, start: 'top top',
-        end: () => `+=${wrap.offsetHeight - $('.hero', wrap).offsetHeight}`,
-        invalidateOnRefresh: true, onUpdate: self => render(self.progress),
-        onRefresh: self => render(self.progress),
+    function go(index) {
+      const target = Math.max(0, Math.min(scenes.length - 1, index));
+      if (slider) slider.slideTo(target);
+      else element.scrollTo({ left: target * element.clientWidth, behavior: reduce.matches ? 'instant' : 'smooth' });
+    }
+    const back = () => go(current - 1), forward = () => go(current + 1);
+    function key(event) {
+      if (event.key === 'ArrowRight' || event.key === 'ArrowLeft') {
+        event.preventDefault(); go(current + (event.key === 'ArrowRight' ? 1 : -1));
+      }
+    }
+    function nativeScroll() { if (!slider) render(Math.round(element.scrollLeft / element.clientWidth)); }
+    function motion() { if (slider) slider.params.speed = reduce.matches ? 0 : 560; }
+    if (window.Swiper) {
+      slider = new Swiper(element, {
+        slidesPerView: 1, spaceBetween: 0, speed: reduce.matches ? 0 : 560,
+        loop: false, grabCursor: true, lazyPreloadPrevNext: 1,
+        a11y: { enabled: true, slideLabelMessage: '사진 {{index}} / {{slidesLength}}', itemRoleDescriptionMessage: '슬라이드' },
+        on: { init: instance => render(instance.activeIndex), slideChange: instance => render(instance.activeIndex) },
       });
-      return () => {
-        trigger.kill(); wrap.classList.remove('is-pinned'); current = -1;
-        render(0); scenes.forEach(scene => $('img', scene)?.style.removeProperty('transform'));
-        title.style.removeProperty('transform');
-      };
+    } else render(0);
+    wrap.classList.add('has-hero-slider');
+    previous.addEventListener('click', back); next.addEventListener('click', forward);
+    element.addEventListener('keydown', key);
+    element.addEventListener('scroll', nativeScroll, { passive: true });
+    reduce.addEventListener('change', motion);
+    cleanups.push(() => {
+      previous.removeEventListener('click', back); next.removeEventListener('click', forward);
+      element.removeEventListener('keydown', key); element.removeEventListener('scroll', nativeScroll);
+      reduce.removeEventListener('change', motion); slider?.destroy(true, true);
+      wrap.classList.remove('has-hero-slider');
     });
-    cleanups.push(() => mm.revert());
   }
   function narrative() {
     const wrap = $('.intro-narrative');
@@ -414,11 +404,12 @@
     await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
     try {
       const needed = [];
-      if ($('.opening')) needed.push(loadScript('/assets/vendor/gsap.min.js').then(() => loadScript('/assets/vendor/ScrollTrigger.min.js')));
-      if ($('[data-carousel]')) needed.push(loadScript('/assets/vendor/swiper-bundle.min.js'));
+      if ($('.intro-narrative')) needed.push(loadScript('/assets/vendor/gsap.min.js').then(() => loadScript('/assets/vendor/ScrollTrigger.min.js')));
+      if ($('[data-carousel], .hero-slider')) needed.push(loadScript('/assets/vendor/swiper-bundle.min.js'));
       if ($('[data-aos]')) needed.push(loadScript('/assets/vendor/aos.js'));
       await Promise.all(needed);
     } catch { /* Native links, readable content and horizontal overflow remain usable. */ }
+    if (window.gsap && window.ScrollTrigger) gsap.registerPlugin(ScrollTrigger);
     safely(opening); safely(narrative); safely(reading); safely(risingStories); safely(carousels);
     if (window.ScrollTrigger) {
       ScrollTrigger.refresh();
