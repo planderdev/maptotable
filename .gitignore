@@ -1,0 +1,11 @@
+node_modules/
+.runtime/
+/cloud-preview/
+/docs/original/*.html
+test-results/
+*.log
+.env
+.env.*
+!.env.example
+.DS_Store
+Thumbs.db

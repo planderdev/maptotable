@@ -1,0 +1,380 @@
+[
+  {
+    "engine": "Chrome",
+    "width": 1920,
+    "height": 1000,
+    "titleSize": 120,
+    "logoSize": 20,
+    "copy": "제주 신촌의 음식, 삶, 기억을 담은 온라인 전시.",
+    "contentTop": 749.40625,
+    "contentBottom": 1000,
+    "headerBottom": 80,
+    "viewportWidth": 1920,
+    "viewportHeight": 1000,
+    "scrollWidth": 1920,
+    "titleWidth": 1792,
+    "titleBoxWidth": 1792,
+    "lines": [
+      742.40625,
+      742.40625,
+      742.40625
+    ]
+  },
+  {
+    "engine": "Chrome",
+    "width": 1440,
+    "height": 900,
+    "titleSize": 120,
+    "logoSize": 20,
+    "copy": "제주 신촌의 음식, 삶, 기억을 담은 온라인 전시.",
+    "contentTop": 652.71875,
+    "contentBottom": 900,
+    "headerBottom": 80,
+    "viewportWidth": 1440,
+    "viewportHeight": 900,
+    "scrollWidth": 1440,
+    "titleWidth": 1325,
+    "titleBoxWidth": 1325,
+    "lines": [
+      645.71875,
+      645.71875,
+      645.71875
+    ]
+  },
+  {
+    "engine": "Chrome",
+    "width": 1024,
+    "height": 768,
+    "titleSize": 99.328,
+    "logoSize": 20,
+    "copy": "제주 신촌의 음식, 삶, 기억을 담은 온라인 전시.",
+    "contentTop": 547.375,
+    "contentBottom": 768,
+    "headerBottom": 80,
+    "viewportWidth": 1024,
+    "viewportHeight": 768,
+    "scrollWidth": 1024,
+    "titleWidth": 942,
+    "titleBoxWidth": 942,
+    "lines": [
+      541.375,
+      541.375,
+      541.375
+    ]
+  },
+  {
+    "engine": "Chrome",
+    "width": 768,
+    "height": 1000,
+    "titleSize": 74.496,
+    "logoSize": 20,
+    "copy": "제주 신촌의 음식, 삶, 기억을 담은 온라인 전시.",
+    "contentTop": 807.4375,
+    "contentBottom": 1000,
+    "headerBottom": 80,
+    "viewportWidth": 768,
+    "viewportHeight": 1000,
+    "scrollWidth": 768,
+    "titleWidth": 707,
+    "titleBoxWidth": 707,
+    "lines": [
+      803.4375,
+      803.4375,
+      803.4375
+    ]
+  },
+  {
+    "engine": "Chrome",
+    "width": 767,
+    "height": 1000,
+    "titleSize": 120,
+    "logoSize": 13,
+    "copy": "제주 신촌의 음식, 삶, 기억을 담은 온라인 전시.",
+    "contentTop": 500.4375,
+    "contentBottom": 1000,
+    "headerBottom": 72,
+    "viewportWidth": 767,
+    "viewportHeight": 1000,
+    "scrollWidth": 767,
+    "titleWidth": 706,
+    "titleBoxWidth": 706,
+    "lines": [
+      500.4375,
+      634.828125,
+      769.21875
+    ]
+  },
+  {
+    "engine": "Chrome",
+    "width": 390,
+    "height": 844,
+    "titleSize": 72.15,
+    "logoSize": 12.87,
+    "copy": "제주 신촌의 음식, 삶, 기억을 담은 온라인 전시.",
+    "contentTop": 505.171875,
+    "contentBottom": 844,
+    "headerBottom": 72,
+    "viewportWidth": 390,
+    "viewportHeight": 844,
+    "scrollWidth": 390,
+    "titleWidth": 358,
+    "titleBoxWidth": 358,
+    "lines": [
+      505.171875,
+      585.984375,
+      666.796875
+    ]
+  },
+  {
+    "engine": "Chrome",
+    "width": 360,
+    "height": 780,
+    "titleSize": 66.6,
+    "logoSize": 11.88,
+    "copy": "제주 신촌의 음식, 삶, 기억을 담은 온라인 전시.",
+    "contentTop": 459.875,
+    "contentBottom": 780,
+    "headerBottom": 72,
+    "viewportWidth": 360,
+    "viewportHeight": 780,
+    "scrollWidth": 360,
+    "titleWidth": 328,
+    "titleBoxWidth": 328,
+    "lines": [
+      459.875,
+      534.453125,
+      609.03125
+    ]
+  },
+  {
+    "engine": "Chrome",
+    "width": 667,
+    "height": 375,
+    "titleSize": 60,
+    "logoSize": 13,
+    "copy": "제주 신촌의 음식, 삶, 기억을 담은 온라인 전시.",
+    "contentTop": 120.828125,
+    "contentBottom": 375,
+    "headerBottom": 72,
+    "viewportWidth": 667,
+    "viewportHeight": 375,
+    "scrollWidth": 667,
+    "titleWidth": 614,
+    "titleBoxWidth": 614,
+    "lines": [
+      120.828125,
+      183.21875,
+      245.609375
+    ]
+  },
+  {
+    "engine": "Chrome",
+    "width": 844,
+    "height": 390,
+    "titleSize": 81.868,
+    "logoSize": 20,
+    "copy": "제주 신촌의 음식, 삶, 기억을 담은 온라인 전시.",
+    "contentTop": 205.09375,
+    "contentBottom": 390,
+    "headerBottom": 80,
+    "viewportWidth": 844,
+    "viewportHeight": 390,
+    "scrollWidth": 844,
+    "titleWidth": 777,
+    "titleBoxWidth": 777,
+    "lines": [
+      200.09375,
+      200.09375,
+      200.09375
+    ]
+  },
+  {
+    "engine": "WebKit",
+    "width": 1920,
+    "height": 1000,
+    "titleSize": 120,
+    "logoSize": 20,
+    "copy": "제주 신촌의 음식, 삶, 기억을 담은 온라인 전시.",
+    "contentTop": 750,
+    "contentBottom": 1000,
+    "headerBottom": 80,
+    "viewportWidth": 1920,
+    "viewportHeight": 1000,
+    "scrollWidth": 1920,
+    "titleWidth": 1792,
+    "titleBoxWidth": 1792,
+    "lines": [
+      743,
+      743,
+      743
+    ]
+  },
+  {
+    "engine": "WebKit",
+    "width": 1440,
+    "height": 900,
+    "titleSize": 120,
+    "logoSize": 20,
+    "copy": "제주 신촌의 음식, 삶, 기억을 담은 온라인 전시.",
+    "contentTop": 654,
+    "contentBottom": 900,
+    "headerBottom": 80,
+    "viewportWidth": 1440,
+    "viewportHeight": 900,
+    "scrollWidth": 1440,
+    "titleWidth": 1325,
+    "titleBoxWidth": 1325,
+    "lines": [
+      647,
+      647,
+      647
+    ]
+  },
+  {
+    "engine": "WebKit",
+    "width": 1024,
+    "height": 768,
+    "titleSize": 99.327995,
+    "logoSize": 20,
+    "copy": "제주 신촌의 음식, 삶, 기억을 담은 온라인 전시.",
+    "contentTop": 548,
+    "contentBottom": 768,
+    "headerBottom": 80,
+    "viewportWidth": 1024,
+    "viewportHeight": 768,
+    "scrollWidth": 1024,
+    "titleWidth": 942,
+    "titleBoxWidth": 942,
+    "lines": [
+      542,
+      542,
+      542
+    ]
+  },
+  {
+    "engine": "WebKit",
+    "width": 768,
+    "height": 1000,
+    "titleSize": 74.495995,
+    "logoSize": 20,
+    "copy": "제주 신촌의 음식, 삶, 기억을 담은 온라인 전시.",
+    "contentTop": 808,
+    "contentBottom": 1000,
+    "headerBottom": 80,
+    "viewportWidth": 768,
+    "viewportHeight": 1000,
+    "scrollWidth": 768,
+    "titleWidth": 707,
+    "titleBoxWidth": 707,
+    "lines": [
+      804,
+      804,
+      804
+    ]
+  },
+  {
+    "engine": "WebKit",
+    "width": 767,
+    "height": 1000,
+    "titleSize": 120,
+    "logoSize": 13,
+    "copy": "제주 신촌의 음식, 삶, 기억을 담은 온라인 전시.",
+    "contentTop": 502,
+    "contentBottom": 1000,
+    "headerBottom": 72,
+    "viewportWidth": 767,
+    "viewportHeight": 1000,
+    "scrollWidth": 767,
+    "titleWidth": 706,
+    "titleBoxWidth": 706,
+    "lines": [
+      502,
+      636,
+      770
+    ]
+  },
+  {
+    "engine": "WebKit",
+    "width": 390,
+    "height": 844,
+    "titleSize": 72.150002,
+    "logoSize": 12.87,
+    "copy": "제주 신촌의 음식, 삶, 기억을 담은 온라인 전시.",
+    "contentTop": 507.984375,
+    "contentBottom": 843.984375,
+    "headerBottom": 72,
+    "viewportWidth": 390,
+    "viewportHeight": 844,
+    "scrollWidth": 390,
+    "titleWidth": 358,
+    "titleBoxWidth": 358,
+    "lines": [
+      507.984375,
+      587.984375,
+      667.984375
+    ]
+  },
+  {
+    "engine": "WebKit",
+    "width": 360,
+    "height": 780,
+    "titleSize": 66.599998,
+    "logoSize": 11.88,
+    "copy": "제주 신촌의 음식, 삶, 기억을 담은 온라인 전시.",
+    "contentTop": 462,
+    "contentBottom": 780,
+    "headerBottom": 72,
+    "viewportWidth": 360,
+    "viewportHeight": 780,
+    "scrollWidth": 360,
+    "titleWidth": 328,
+    "titleBoxWidth": 328,
+    "lines": [
+      462,
+      536,
+      610
+    ]
+  },
+  {
+    "engine": "WebKit",
+    "width": 667,
+    "height": 375,
+    "titleSize": 60,
+    "logoSize": 13,
+    "copy": "제주 신촌의 음식, 삶, 기억을 담은 온라인 전시.",
+    "contentTop": 122,
+    "contentBottom": 375,
+    "headerBottom": 72,
+    "viewportWidth": 667,
+    "viewportHeight": 375,
+    "scrollWidth": 667,
+    "titleWidth": 614,
+    "titleBoxWidth": 614,
+    "lines": [
+      122,
+      184,
+      246
+    ]
+  },
+  {
+    "engine": "WebKit",
+    "width": 844,
+    "height": 390,
+    "titleSize": 81.867996,
+    "logoSize": 20,
+    "copy": "제주 신촌의 음식, 삶, 기억을 담은 온라인 전시.",
+    "contentTop": 206,
+    "contentBottom": 390,
+    "headerBottom": 80,
+    "viewportWidth": 844,
+    "viewportHeight": 390,
+    "scrollWidth": 844,
+    "titleWidth": 777,
+    "titleBoxWidth": 777,
+    "lines": [
+      201,
+      201,
+      201
+    ]
+  }
+]

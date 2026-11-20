@@ -1,0 +1,75 @@
+/* Text-only introduction and one shared stage for the horizontal reading sequence. */
+.intro-narrative { position:relative; background:var(--neutral-0); }
+.intro-narrative[id] { scroll-margin-top:0; }
+.intro-stage { position:relative; display:grid; place-items:center; height:100svh; min-height:600px; overflow:clip; background:var(--neutral-0); }
+.intro-statement { margin:0; padding-inline:var(--layout-gutter); color:var(--text-primary); font-size:clamp(36px,5.4vw,96px); font-weight:650; letter-spacing:-.055em; line-height:1.4; text-align:center; }
+.intro-mask { position:relative; display:block; overflow:clip; }
+.intro-mask-base { position:absolute; inset:0; opacity:.55; }
+.intro-mask-text { display:block; }
+.intro-narrative.is-pinned { height:240svh; }
+.intro-narrative.is-pinned .intro-stage { position:sticky; top:0; }
+.intro.intro-reading { padding:0; background:var(--neutral-0); }
+.intro-reading-stage { padding:64px var(--layout-gutter); }
+.intro-sentence { display:grid; place-items:center; padding-block:32px; }
+.intro-sentence-inner { width:min(100%,960px); text-align:center; }
+.intro-sentence-text { margin:0; color:var(--text-primary); font-size:clamp(28px,2.65vw,38px); font-weight:600; line-height:1.6; letter-spacing:-.04em; word-break:keep-all; text-wrap:balance; }
+.intro-reading-sequence.is-pinned { height:280svh; }
+.intro-reading-sequence.is-pinned .intro-reading-stage { position:sticky; top:var(--header-height); display:grid; height:calc(100svh - var(--header-height)); padding:0; overflow:clip; }
+.intro-reading-sequence.is-pinned .intro-sentence { grid-area:1/1; width:100%; height:100%; min-width:0; padding:32px var(--layout-gutter); }
+.intro-reading-actions { display:flex; justify-content:center; padding-bottom:96px; }
+.photo-marquee { --marquee-gap:24px; overflow-x:auto; overflow-y:hidden; padding-block:40px; scrollbar-width:none; }
+.photo-marquee.is-enhanced { overflow:clip; }
+.photo-marquee:focus-visible { outline:2px solid var(--text-primary); outline-offset:-4px; }
+.photo-marquee-track { display:flex; align-items:center; width:max-content; animation:photos-left 50s linear infinite; animation-play-state:paused; }
+.photo-marquee.is-running .photo-marquee-track { animation-play-state:running; }
+.photo-marquee:is(:hover,:focus-within) .photo-marquee-track { animation-play-state:paused; }
+.photo-marquee-group { display:flex; align-items:center; gap:var(--marquee-gap); padding-right:var(--marquee-gap); flex-shrink:0; }
+.photo-marquee-item { width:clamp(240px,28vw,480px); aspect-ratio:4/3; flex-shrink:0; margin:0; overflow:hidden; }
+.photo-marquee-item .responsive-image { width:100%; height:100%; object-fit:cover; }
+@keyframes photos-left { to { transform:translateX(-50%); } }
+body[data-page=home] main > .media-interlude { margin:0; }
+.media-interlude--immersive[id] { scroll-margin-top:0; }
+.media-interlude--immersive .ambient-video { width:100%; height:100vh; height:100svh; min-height:480px; border-radius:0; aspect-ratio:auto; isolation:isolate; }
+.media-interlude--immersive video { position:absolute; inset:0; }
+.video-shade { position:absolute; inset:0; z-index:1; pointer-events:none; background:linear-gradient(180deg,rgba(0,0,0,.42),rgba(0,0,0,.59) 50%,rgba(0,0,0,.5)); }
+.video-statement { position:absolute; inset:0; z-index:2; display:flex; flex-direction:column; justify-content:center; align-items:center; padding:80px var(--layout-gutter); margin:0; color:var(--text-inverse); font-size:clamp(28px,3.5vw,64px); font-weight:650; letter-spacing:-.045em; line-height:1.4; text-align:center; pointer-events:none; }
+.video-statement span { display:block; }
+.video-fallback { position:absolute; inset:auto auto 24px 24px; z-index:3; color:var(--text-inverse); text-decoration:underline; }
+.media-interlude--immersive video:focus-visible { outline:2px solid var(--brand-orange); outline-offset:-6px; }
+.story-card-link { display:block; }
+@media(hover:hover) and (pointer:fine) {
+  .story-card-link .story-card-image { transition:clip-path 560ms var(--ease-out); clip-path:inset(0 round var(--story-card-radius)); }
+  .story-card-link:hover .story-card-image { clip-path:inset(8px round var(--story-card-radius)); }
+  .story-card-link:hover img { transform:scale(1.07); }
+}
+@media(max-width:767px) {
+  .intro-stage { min-height:500px; }
+  .intro-statement { font-size:clamp(28px,8.5vw,48px); line-height:1.5; }
+  .intro-narrative.is-pinned { height:200svh; }
+  .intro-reading-stage { padding-block:40px; }
+  .intro-reading-sequence.is-pinned { height:260svh; }
+  .intro-reading-sequence.is-pinned .intro-sentence { padding-block:24px; }
+  .intro-sentence-text { font-size:clamp(24px,6.2vw,30px); }
+  .intro-reading-actions { padding-bottom:64px; }
+  .photo-marquee { --marquee-gap:16px; padding-block:24px 32px; }
+  .photo-marquee-track { animation-duration:40s; }
+  .photo-marquee-item { width:220px; }
+  .video-statement { font-size:clamp(25px,6.5vw,44px); padding-inline:var(--layout-gutter); }
+  .video-statement span:last-child { max-width:14em; text-wrap:balance; }
+}
+@media(max-height:600px) { .intro-stage { min-height:100svh; }.intro-statement { font-size:clamp(24px,7svh,64px); } }
+@media(max-height:500px) { .intro-sentence-text { font-size:clamp(18px,4.5svh,28px); }.media-interlude--immersive .ambient-video { min-height:100svh; }.video-statement { font-size:clamp(24px,5vw,40px); } }
+@media(prefers-reduced-motion:reduce) {
+  .intro-narrative.is-pinned { height:auto; }
+  .intro-narrative.is-pinned .intro-stage { position:relative; }
+  .intro-mask-text,.intro-sentence { transform:none!important; opacity:1!important; clip-path:none!important; }
+  .intro-mask-base { visibility:hidden; }
+  .intro-reading-sequence.is-pinned { height:auto; }
+  .intro-reading-sequence.is-pinned .intro-reading-stage { position:relative; top:0; display:block; height:auto; padding:64px var(--layout-gutter); overflow:visible; }
+  .intro-reading-sequence.is-pinned .intro-sentence { height:auto; padding:32px 0; }
+  .photo-marquee.is-enhanced { overflow-x:auto; }
+  .photo-marquee-track { animation:none; transform:none; }
+  .photo-marquee-group[aria-hidden=true] { display:none; }
+  .story-card-link .story-card-image { clip-path:none!important; transition:none; }
+  .story-card-link:hover img { transform:none; }
+}

@@ -1,0 +1,28 @@
+{
+  "name": "map-to-table-php",
+  "private": true,
+  "version": "1.0.0",
+  "description": "PHP-rendered MAP TO TABLE exhibition and shared design system",
+  "scripts": {
+    "prepare": "node tools/prepare-assets.mjs",
+    "build": "node tools/prepare-assets.mjs && node tools/lint-php.mjs && php tools/check.php",
+    "lint": "node tools/lint-php.mjs",
+    "test:mobile": "node tests/mobile.mjs",
+    "test:media": "node tests/media-smoke.mjs",
+    "optimize:images": "node tools/optimize-images.mjs",
+    "test": "node tests/browser.mjs",
+    "start": "php -S 127.0.0.1:8080 -t public router.php"
+  },
+  "dependencies": {
+    "aos": "2.3.4",
+    "gsap": "3.14.2",
+    "lucide-static": "0.468.0",
+    "swiper": "14.4.0"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "4.11.0",
+    "lighthouse": "13.6.0",
+    "playwright": "1.56.1",
+    "sharp": "0.35.5"
+  }
+}

@@ -1,0 +1,11 @@
+Options -Indexes
+DirectoryIndex index.php
+RewriteEngine On
+RewriteRule ^index\.html$ index.php [L,QSA]
+RewriteRule ^story\.html$ story.php [L,QSA]
+RewriteRule ^join\.html$ join.php [L,QSA]
+RewriteRule ^design-system/?$ design-system.php [L,QSA]
+ErrorDocument 404 /404.php
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/css application/javascript image/svg+xml
+</IfModule>

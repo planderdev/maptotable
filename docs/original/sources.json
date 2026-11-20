@@ -1,0 +1,57 @@
+[
+  {
+    "file": "main.html",
+    "url": "https://map-to-table.vercel.app/",
+    "bytes": 4901
+  },
+  {
+    "file": "story.html",
+    "url": "https://map-to-table.vercel.app/story.html?id=1",
+    "bytes": 1010
+  },
+  {
+    "file": "join.html",
+    "url": "https://map-to-table.vercel.app/join.html",
+    "bytes": 967
+  },
+  {
+    "file": "content.js",
+    "url": "https://map-to-table.vercel.app/js/content.js",
+    "bytes": 4814
+  },
+  {
+    "file": "main.js",
+    "url": "https://map-to-table.vercel.app/js/main.js",
+    "bytes": 5549
+  },
+  {
+    "file": "story.js",
+    "url": "https://map-to-table.vercel.app/js/story.js",
+    "bytes": 3037
+  },
+  {
+    "file": "join.js",
+    "url": "https://map-to-table.vercel.app/js/join.js",
+    "bytes": 4165
+  },
+  {
+    "file": "style.css",
+    "url": "https://map-to-table.vercel.app/css/style.css",
+    "bytes": 19685
+  },
+  {
+    "file": "design-system.html",
+    "url": "https://map-to-table-ds.vercel.app/",
+    "bytes": 46653
+  },
+  {
+    "file": "reference-dminusone.html",
+    "url": "https://www.dminusone.com/",
+    "bytes": 30027
+  },
+  {
+    "file": "reference-kanu.html",
+    "url": "https://www.kanu.co.kr/limited-edition-2026kanubc",
+    "bytes": 44382
+  }
+]

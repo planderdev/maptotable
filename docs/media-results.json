@@ -1,0 +1,68 @@
+[
+  {
+    "name": "Chrome desktop",
+    "status": "passed",
+    "checks": [
+      "Only first hero image requested before scroll",
+      "Offscreen poster and video are deferred",
+      "Video anchor starts at viewport top",
+      "Video automatically plays muted inline",
+      "Video fills viewport without gutters",
+      "Overlay stays inside video",
+      "Video time advances",
+      "Film stop button removed",
+      "Offscreen video stops",
+      "Visible film resumes automatically",
+      "Explicit pause is preserved on return",
+      "Reduced motion shows static poster",
+      "Reduced motion still allows manual play",
+      "No page overflow",
+      "No JavaScript errors"
+    ],
+    "errors": []
+  },
+  {
+    "name": "Chrome mobile",
+    "status": "passed",
+    "checks": [
+      "Only first hero image requested before scroll",
+      "Offscreen poster and video are deferred",
+      "Video anchor starts at viewport top",
+      "Video automatically plays muted inline",
+      "Video fills viewport without gutters",
+      "Overlay stays inside video",
+      "Video time advances",
+      "Film stop button removed",
+      "Offscreen video stops",
+      "Visible film resumes automatically",
+      "Explicit pause is preserved on return",
+      "Reduced motion shows static poster",
+      "Reduced motion still allows manual play",
+      "No page overflow",
+      "No JavaScript errors"
+    ],
+    "errors": []
+  },
+  {
+    "name": "WebKit iPhone viewport",
+    "status": "passed",
+    "checks": [
+      "Only first hero image requested before scroll",
+      "Offscreen poster and video are deferred",
+      "Video anchor starts at viewport top",
+      "Video automatically plays muted inline",
+      "Video fills viewport without gutters",
+      "Overlay stays inside video",
+      "Video time advances",
+      "Film stop button removed",
+      "Offscreen video stops",
+      "Visible film resumes automatically",
+      "Explicit pause is preserved on return",
+      "Reduced motion shows static poster",
+      "Reduced motion still allows manual play",
+      "No page overflow",
+      "No JavaScript errors"
+    ],
+    "errors": []
+  }
+]

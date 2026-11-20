@@ -1,0 +1,5 @@
+Built-in ImageGen. Generated 2026-11-20.
+Original: public/assets/images/food-memory.png
+Delivery variant: public/assets/images/food-memory.webp
+
+Use case: photorealistic-natural. Asset type: supporting still-life image for a Korean food-memory digital exhibition called MAP TO TABLE. Generate a refined editorial photograph, landscape 3:2. A modest Korean ceramic bowl with raw barley grains, a small loose piece of dried seaweed and three tangerines, one with a leaf, arranged loosely on a cool pale grey stone tabletop. Natural low side sunlight casts long gentle shadows. Close tactile materials, imperfect handmade ceramics, quiet generous negative space, honest photographic texture. Art-directed still life, not an actual documentary photograph of a named resident or a particular meal. No people, no hands, no lettering, no typography, no logos, no watermark. Restrained neutral grey palette with naturally orange tangerines and dark seaweed. Objects grouped to right of center with enough breathing room. High quality fine grain photography, not a 3D render.

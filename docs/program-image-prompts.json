@@ -1,0 +1,50 @@
+{
+  "generatedAt": "2026-11-21",
+  "purpose": "Illustrative program-card backgrounds, not documentary event photography. No visible source captions per user request.",
+  "images": [
+    {
+      "key": "workshop",
+      "prompt": "Use case: photorealistic-natural. Asset type: portrait 3:4 photographic background for one program card of MAP TO TABLE, a Korean food-memory exhibition. Refined candid editorial photography, tactile natural materials and believable everyday detail, warm natural light, subtle film grain, no plastic CGI look. This is an illustrative mood image, not documentary evidence of a real event, resident, meal or named village. Composition: main photographic subject in the upper two thirds, calmer darker lower third suitable for white HTML text overlay; do not include any actual text, letters, numbers, labels, logos, borders or watermarks. No recognizable faces. Output one single full-frame photograph, no collage or layout. Scene: a close, slightly overhead view of a modest shared wooden workshop table with handmade ceramic bowls containing barley grains, a little dried seaweed, a few tangerines, a folded linen cloth and two blank paper note cards. Honest irregular ceramics and citrus peel texture, a quiet sense of gathering around food and memories. Do not add writing or tools unrelated to a food storytelling workshop.",
+      "mode": "built-in image_gen",
+      "original": "media/generated/programs/workshop.png",
+      "assets": [
+        "public/assets/images/programs/workshop-480.webp",
+        "public/assets/images/programs/workshop-960.webp"
+      ],
+      "source": "C:\\Users\\pc\\.codex\\generated_images\\01a1f8c5-ba98-7ba0-92a5-ac793a3e5c7b\\exec-f215e386-6cd5-4cc6-ae59-5f41a4743d89.png"
+    },
+    {
+      "key": "village",
+      "prompt": "Use case: photorealistic-natural. Asset type: portrait 3:4 photographic background for one program card of MAP TO TABLE, a Korean food-memory exhibition. Refined candid editorial photography, tactile natural materials and believable everyday detail, warm natural light, subtle film grain, no plastic CGI look. This is an illustrative mood image, not documentary evidence of a real event, resident, meal or named village. Composition: main photographic subject in the upper two thirds, calmer darker lower third suitable for white HTML text overlay; do not include any actual text, letters, numbers, labels, logos, borders or watermarks. No recognizable faces. Output one single full-frame photograph, no collage or layout. Scene: a quiet narrow coastal Korean village walking lane bordered by low weathered dark volcanic-stone walls, a modest white house edge, a little green foliage and a glimpse of blue sea beyond a bend. Afternoon sunlight, weathered stone texture and grounded everyday scale. A generic atmospheric coastal lane inspired by Jeju, not a recognizable or claimed real location. No people, no vehicles, no readable signs, no tourist landmarks.",
+      "mode": "built-in image_gen",
+      "original": "media/generated/programs/village.png",
+      "assets": [
+        "public/assets/images/programs/village-480.webp",
+        "public/assets/images/programs/village-960.webp"
+      ],
+      "source": "C:\\Users\\pc\\.codex\\generated_images\\01a1f8c5-ba98-7ba0-92a5-ac793a3e5c7b\\exec-2c1ed1e3-de0b-47f0-ac88-571ea64e6e00.png"
+    },
+    {
+      "key": "dining",
+      "prompt": "Use case: photorealistic-natural. Asset type: portrait 3:4 photographic background for one program card of MAP TO TABLE, a Korean food-memory exhibition. Refined candid editorial photography, tactile natural materials and believable everyday detail, warm natural light, subtle film grain, no plastic CGI look. This is an illustrative mood image, not documentary evidence of a real event, resident, meal or named village. Composition: main photographic subject in the upper two thirds, calmer darker lower third suitable for white HTML text overlay; do not include any actual text, letters, numbers, labels, logos, borders or watermarks. No recognizable faces. Output one single full-frame photograph, no collage or layout. Scene: close editorial view across a beautifully simple Korean seasonal table, handmade earthenware bowls with barley rice, a small seaweed broth and restrained green vegetable side dishes, wood grain and naturally folded linen, intimate soft side light. A few places suggest sharing a meal, without people. Keep food realistic and modest, not a luxury restaurant, not styled as a named resident's actual dish.",
+      "mode": "built-in image_gen",
+      "original": "media/generated/programs/dining.png",
+      "assets": [
+        "public/assets/images/programs/dining-480.webp",
+        "public/assets/images/programs/dining-960.webp"
+      ],
+      "source": "C:\\Users\\pc\\.codex\\generated_images\\01a1f8c5-ba98-7ba0-92a5-ac793a3e5c7b\\exec-33bea6db-406c-498e-bb14-2028d7214ee2.png"
+    },
+    {
+      "key": "popup",
+      "prompt": "Use case: photorealistic-natural. Asset type: portrait 3:4 photographic background for one program card of MAP TO TABLE, a Korean food-memory exhibition. Refined candid editorial photography, tactile natural materials and believable everyday detail, warm natural light, subtle film grain, no plastic CGI look. This is an illustrative mood image, not documentary evidence of a real event, resident, meal or named village. Composition: main photographic subject in the upper two thirds, calmer darker lower third suitable for white HTML text overlay; do not include any actual text, letters, numbers, labels, logos, borders or watermarks. No recognizable faces. Output one single full-frame photograph, no collage or layout. Scene: an intimate temporary food pop-up counter made of warm natural wood, small baskets of fresh tangerines and a few unbranded brown-paper food parcels, handmade ceramic tasting bowls, folded linen, soft natural studio window light. Close photographic crop with tactile food and paper detail, relaxed contemporary Korean food culture, no people, no signage, no printed words or branding.",
+      "mode": "built-in image_gen",
+      "original": "media/generated/programs/popup.png",
+      "assets": [
+        "public/assets/images/programs/popup-480.webp",
+        "public/assets/images/programs/popup-960.webp"
+      ],
+      "source": "C:\\Users\\pc\\.codex\\generated_images\\01a1f8c5-ba98-7ba0-92a5-ac793a3e5c7b\\exec-2a8dbbed-6bb9-4842-8359-4c7be8e5db65.png"
+    }
+  ]
+}
