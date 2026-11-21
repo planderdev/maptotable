@@ -32,7 +32,7 @@ try {
         await page.waitForFunction(()=>!!document.querySelector('.program-carousel .swiper').swiper);
         await page.locator('.program-card-photo').first().waitFor({state:'visible'});
         await page.waitForFunction(()=>{const i=document.querySelector('.program-card-photo');return i.complete&&i.naturalWidth>0;});
-        const program=await page.locator('.program-carousel .swiper').evaluate(el=>{const slides=[...el.querySelectorAll('.swiper-slide')].map(s=>s.getBoundingClientRect()),b=el.getBoundingClientRect();return {x:b.x,width:b.width,viewport:document.documentElement.clientWidth,gap:slides[1].left-slides[0].right,configured:el.swiper.params.spaceBetween,inset:slides[0].left,heading:parseFloat(getComputedStyle(document.querySelector('.program-heading')).paddingLeft),free:el.swiper.params.freeMode.enabled};});
+        const program=await page.locator('.program-carousel .swiper').evaluate(el=>{const slides=[...el.querySelectorAll('.swiper-slide')].map(s=>s.getBoundingClientRect()),b=el.getBoundingClientRect(),heading=document.querySelector('.program-heading');return {x:b.x,width:b.width,viewport:document.documentElement.clientWidth,gap:slides[1].left-slides[0].right,configured:el.swiper.params.spaceBetween,inset:slides[0].left,heading:heading.getBoundingClientRect().left+parseFloat(getComputedStyle(heading).paddingLeft),free:el.swiper.params.freeMode.enabled};});
         const gap=width>=1200?40:width>=768?24:16;
         check(`Full bleed program rail ${width}`,program.x===0&&program.width===program.viewport);
         check(`Program spaceBetween ${width}`,Math.abs(program.gap-gap)<1&&program.configured===gap);

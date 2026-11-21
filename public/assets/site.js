@@ -227,7 +227,10 @@
       const element = $('.swiper', block), count = $('.carousel-count', block);
       const slides = $$('.swiper-slide', element);
       const isProgram = block.classList.contains('program-carousel--fullbleed');
-      const edge = () => parseFloat(getComputedStyle($('.program-heading', block.closest('section'))).paddingLeft);
+      const edge = () => {
+        const heading = $('.program-heading', block.closest('section'));
+        return heading.getBoundingClientRect().left + parseFloat(getComputedStyle(heading).paddingLeft) - element.getBoundingClientRect().left;
+      };
       const options = {
         slidesPerView: 'auto', spaceBetween: 24, speed: reduce.matches ? 0 : 420,
         grabCursor: true, loop: false, watchOverflow: true, preventClicks: true, preventClicksPropagation: true,
