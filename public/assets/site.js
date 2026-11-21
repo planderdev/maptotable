@@ -90,7 +90,25 @@
     if (!wrap || !element || wrap.classList.contains('has-hero-slider')) return;
     const scenes = $$('.hero-scene', element), progress = $('.hero-progress', wrap);
     const count = $('.hero-count', wrap), previous = $('.hero-prev', wrap), next = $('.hero-next', wrap);
-    let current = 0, slider = null;
+    const autoplay = $('.hero-autoplay', wrap), dialog = $('#mobile-menu');
+    let current = 0, slider = null, visible = false, hovered = false, userPaused = false;
+    function syncAutoplay() {
+      const focused = wrap.contains(document.activeElement) && document.activeElement !== autoplay;
+      const playing = !!slider && visible && !hovered && !focused && !userPaused && !reduce.matches && !document.hidden && !dialog?.open;
+      if (slider) {
+        if (playing && !slider.autoplay.running) { slider.autoplay.start(); if (slider.autoplay.paused) slider.autoplay.resume(); }
+        else if (!playing && slider.autoplay.running) slider.autoplay.stop();
+      }
+      autoplay.hidden = !slider || reduce.matches;
+      autoplay.setAttribute('aria-label', userPaused ? '히어로 자동재생 시작' : '히어로 자동재생 일시정지');
+      $('[data-hero-pause]', autoplay).hidden = userPaused;
+      $('[data-hero-play]', autoplay).hidden = !userPaused;
+      count.setAttribute('aria-live', playing ? 'off' : 'polite');
+    }
+    function toggleAutoplay() { userPaused = !userPaused; syncAutoplay(); }
+    function pointerEnter(event) { if (event.pointerType === 'mouse') { hovered = true; syncAutoplay(); } }
+    function pointerLeave(event) { if (event.pointerType === 'mouse') { hovered = false; syncAutoplay(); } }
+    function focus() { queueMicrotask(syncAutoplay); }
     function render(index) {
       current = Math.max(0, Math.min(scenes.length - 1, index));
       wrap.dataset.currentScene = String(current);
@@ -117,21 +135,35 @@
       }
     }
     function nativeScroll() { if (!slider) render(Math.round(element.scrollLeft / element.clientWidth)); }
-    function motion() { if (slider) slider.params.speed = reduce.matches ? 0 : 560; }
+    function motion() { if (slider) slider.params.speed = reduce.matches ? 0 : 560; syncAutoplay(); }
     if (window.Swiper) {
       slider = new Swiper(element, {
         slidesPerView: 1, spaceBetween: 0, speed: reduce.matches ? 0 : 560,
         loop: false, grabCursor: true, lazyPreloadPrevNext: 1,
+        autoplay: { enabled: !reduce.matches, delay: 5000, disableOnInteraction: false, stopOnLastSlide: false },
         a11y: { enabled: true, slideLabelMessage: '사진 {{index}} / {{slidesLength}}', itemRoleDescriptionMessage: '슬라이드' },
         on: { init: instance => render(instance.activeIndex), slideChange: instance => render(instance.activeIndex) },
       });
     } else render(0);
     wrap.classList.add('has-hero-slider');
+    const observer = new IntersectionObserver(entries => { visible = entries.some(entry => entry.isIntersecting && entry.intersectionRatio >= .5); syncAutoplay(); }, { threshold: [0, .5] });
+    observer.observe(wrap);
+    const menuObserver = new MutationObserver(syncAutoplay);
+    if (dialog) menuObserver.observe(dialog, { attributes: true, attributeFilter: ['open'] });
+    syncAutoplay();
+    autoplay.addEventListener('click', toggleAutoplay);
+    element.addEventListener('pointerenter', pointerEnter); element.addEventListener('pointerleave', pointerLeave);
+    wrap.addEventListener('focusin', focus); wrap.addEventListener('focusout', focus);
+    document.addEventListener('visibilitychange', syncAutoplay);
     previous.addEventListener('click', back); next.addEventListener('click', forward);
     element.addEventListener('keydown', key);
     element.addEventListener('scroll', nativeScroll, { passive: true });
     reduce.addEventListener('change', motion);
     cleanups.push(() => {
+      observer.disconnect(); menuObserver.disconnect(); autoplay.removeEventListener('click', toggleAutoplay);
+      element.removeEventListener('pointerenter', pointerEnter); element.removeEventListener('pointerleave', pointerLeave);
+      wrap.removeEventListener('focusin', focus); wrap.removeEventListener('focusout', focus);
+      document.removeEventListener('visibilitychange', syncAutoplay);
       previous.removeEventListener('click', back); next.removeEventListener('click', forward);
       element.removeEventListener('keydown', key); element.removeEventListener('scroll', nativeScroll);
       reduce.removeEventListener('change', motion); slider?.destroy(true, true);
@@ -146,6 +178,7 @@
     mm.add('(prefers-reduced-motion: no-preference)', () => {
       wrap.classList.add('is-pinned');
       gsap.set(lines, { opacity: .55, clipPath: 'inset(0 100% 0 0)' });
+      gsap.set($$('.intro-highlight', wrap), { backgroundColor: 'transparent' });
       const timeline = gsap.timeline({
         scrollTrigger: {
           id: 'introduction', trigger: wrap, start: 'top top',
@@ -156,6 +189,10 @@
       });
       timeline.to(lines, { opacity: 1, clipPath: 'inset(0 0% 0 0)', duration: .44, stagger: .2, ease: 'none' }, 0)
         .to({}, { duration: .16 });
+      lines.forEach((line, i) => {
+        const words = $$('.intro-highlight', line);
+        if (words.length) timeline.to(words, { backgroundColor: getComputedStyle(wrap).getPropertyValue('--brand-orange').trim(), duration: .22, ease: 'none' }, i * .2 + .22);
+      });
       return () => { wrap.classList.remove('is-pinned'); delete wrap.dataset.progress; };
     });
     cleanups.push(() => mm.revert());

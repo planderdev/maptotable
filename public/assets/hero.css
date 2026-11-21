@@ -21,6 +21,7 @@
 .has-hero-slider .hero-controls { display:flex; }
 .hero-count { min-width:48px; margin-right:12px; font-size:14px; line-height:1.5; font-variant-numeric:tabular-nums; white-space:nowrap; }
 .hero-controls .icon-button { width:48px; height:48px; color:var(--text-inverse); background:rgba(18,18,18,.2); border-color:rgba(255,255,255,.65); border-radius:50%; }
+.hero-autoplay > span { display:flex; }
 .hero-controls .icon-button:hover:not(:disabled) { color:var(--text-primary); background:var(--neutral-0); }
 .hero-controls .icon-button:disabled { opacity:.35; cursor:default; }
 .hero-controls :focus-visible { outline-color:var(--brand-orange); box-shadow:none; }

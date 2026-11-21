@@ -15,13 +15,13 @@ siteHeader();
             <div class="hero-content">
                 <h1 class="hero-title"><span>MAP</span> <span>TO</span> <span>TABLE</span></h1>
                 <p class="hero-subcopy">제주 신촌의 음식, 삶, 기억을 담은 온라인 전시.</p>
-                <div class="hero-footer"><div class="hero-progress" role="progressbar" aria-label="히어로 사진 진행" aria-valuemin="1" aria-valuemax="<?= count($content['sequence']) ?>" aria-valuenow="1"><span class="hero-progress-fill"></span></div><div class="hero-controls"><span class="hero-count" aria-live="polite" aria-atomic="true">1 / <?= count($content['sequence']) ?></span><button class="icon-button hero-prev" type="button" aria-label="히어로 이전 사진" disabled><?= icon('arrow-left') ?></button><button class="icon-button hero-next" type="button" aria-label="히어로 다음 사진"><?= icon('arrow-right') ?></button></div></div>
+                <div class="hero-footer"><div class="hero-progress" role="progressbar" aria-label="히어로 사진 진행" aria-valuemin="1" aria-valuemax="<?= count($content['sequence']) ?>" aria-valuenow="1"><span class="hero-progress-fill"></span></div><div class="hero-controls"><span class="hero-count" aria-live="polite" aria-atomic="true">1 / <?= count($content['sequence']) ?></span><button class="icon-button hero-autoplay" type="button" aria-label="히어로 자동재생 일시정지" hidden><span data-hero-pause><?= icon('pause') ?></span><span data-hero-play hidden><?= icon('play') ?></span></button><button class="icon-button hero-prev" type="button" aria-label="히어로 이전 사진" disabled><?= icon('arrow-left') ?></button><button class="icon-button hero-next" type="button" aria-label="히어로 다음 사진"><?= icon('arrow-right') ?></button></div></div>
             </div>
         </section>
     </div>
     <section class="intro-narrative" id="say" aria-labelledby="intro-title">
         <div class="intro-stage">
-            <h2 class="intro-statement" id="intro-title"><?php foreach (['제주의 음식에는', '사람들의 삶과 계절,', '기억이 담겨 있습니다.'] as $line): ?><span class="intro-mask"><span class="intro-mask-base" aria-hidden="true"><?= e($line) ?></span><span class="intro-mask-text"><?= e($line) ?></span></span><?php endforeach; ?></h2>
+            <h2 class="intro-statement" id="intro-title"><?php foreach (['제주의 음식에는', '사람들의 삶과 계절,', '기억이 담겨 있습니다.'] as $line): ?><span class="intro-mask"><span class="intro-mask-base" aria-hidden="true"><?= e($line) ?></span><span class="intro-mask-text"><?= preg_replace('/(삶|계절|기억)/u', '<span class="intro-highlight">$1</span>', e($line)) ?></span></span><?php endforeach; ?></h2>
         </div>
     </section>
     <section class="intro intro-reading" id="introduction" aria-label="전시 소개">

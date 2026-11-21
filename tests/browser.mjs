@@ -62,6 +62,12 @@ try {
   check('Story section white with three-line heading',await page.locator('.stories-rise').evaluate(el=>getComputedStyle(el).backgroundColor==='rgb(255, 255, 255)'&&[...el.querySelectorAll('h2 span')].map(s=>s.textContent).join('/')==='음식/삶/기억'&&!el.querySelector('.section-heading p')));
   check('Hero has no pin or extra scroll height',await page.evaluate(()=>!ScrollTrigger.getById('opening')&&!document.querySelector('.opening').classList.contains('is-pinned')&&document.querySelector('.opening').offsetHeight===1000&&getComputedStyle(document.querySelector('.hero')).position==='relative'));
   check('Hero previous control disabled at first photo',await page.locator('.hero-prev').isDisabled());
+  await page.locator('.header-join').focus();await page.mouse.move(0,0);
+  await page.waitForFunction(()=>document.querySelector('.opening').dataset.currentScene==='1',{},{timeout:8000});
+  check('Hero advances automatically with synced counter',await page.locator('.hero-count').innerText()==='2 / 6');
+  await page.locator('.hero-autoplay').click();
+  check('Hero autoplay can be paused',await page.locator('.hero-slider').evaluate(el=>!el.swiper.autoplay.running)&&await page.locator('.hero-autoplay').getAttribute('aria-label')==='히어로 자동재생 시작');
+  await page.locator('.hero-prev').click();await page.waitForTimeout(600);
   for(const i of [0,1,2,3,4,5,4,3,2,1,0]){
     if(i>0&&i<=5&&Number(await page.locator('.opening').getAttribute('data-current-scene'))<i)await page.locator('.hero-next').click();
     else if(Number(await page.locator('.opening').getAttribute('data-current-scene'))>i)await page.locator('.hero-prev').click();
@@ -80,7 +86,7 @@ try {
   await page.evaluate(()=>scrollTo(0,450));await page.waitForTimeout(200);
   check('Vertical scroll leaves hero photo unchanged and moves hero out',await page.locator('.hero').evaluate(el=>Math.abs(el.getBoundingClientRect().top+450)<2&&document.querySelector('.opening').dataset.currentScene==='1'));
   await page.evaluate(()=>scrollTo(0,0));
-  check('Hero retains title, subcopy and lower-right navigation',await page.locator('.hero-content').evaluate(el=>!!el.querySelector('h1')&&!!el.querySelector('.hero-subcopy')&&!!el.querySelector('[role=progressbar]')&&el.querySelectorAll('button').length===2&&el.querySelector('.hero-controls').getBoundingClientRect().left>innerWidth/2));
+  check('Hero retains title, subcopy and lower-right navigation',await page.locator('.hero-content').evaluate(el=>!!el.querySelector('h1')&&!!el.querySelector('.hero-subcopy')&&!!el.querySelector('[role=progressbar]')&&el.querySelectorAll('button').length===3&&el.querySelector('.hero-controls').getBoundingClientRect().left>innerWidth/2));
   check('Neutral token is exact',await page.evaluate(()=>getComputedStyle(document.documentElement).getPropertyValue('--neutral-900').trim()==='#121212'));
   check('Header record link is primary',await page.locator('.header-join').evaluate(el=>el.classList.contains('button--primary')&&getComputedStyle(el).backgroundColor==='rgb(240, 130, 58)'));
   check('Visible media captions and attribution removed',await page.locator('figcaption,a[href*="pixabay"]').count()===0);
@@ -90,7 +96,7 @@ try {
     await page.waitForTimeout(800);
     const state=await page.evaluate(()=>({stage:document.querySelector('.intro-stage').getBoundingClientRect().toJSON(),lines:[...document.querySelectorAll('.intro-mask-text')].map(el=>({opacity:Number(getComputedStyle(el).opacity),clip:getComputedStyle(el).clipPath})),images:document.querySelectorAll('.intro-narrative img').length}));
     check(`Intro stays pinned at ${progress}`,Math.abs(state.stage.y)<2&&state.images===0);
-    if(progress===1){check('Intro title fully reveals',state.lines.every(l=>l.opacity===1&&l.clip==='inset(0px 0% 0px 0px)'));await page.screenshot({path:'docs/screenshots/intro-mask-1440.png'});}
+    if(progress===1){check('Intro title fully reveals',state.lines.every(l=>l.opacity===1&&l.clip==='inset(0px 0% 0px 0px)'));check('Intro highlights life, seasons and memory in primary color',await page.locator('.intro-highlight').evaluateAll(words=>words.map(el=>el.textContent).join('/')==='삶/계절/기억'&&words.every(el=>getComputedStyle(el).backgroundColor==='rgb(240, 130, 58)'&&getComputedStyle(el).color==='rgb(18, 18, 18)')));await page.screenshot({path:'docs/screenshots/intro-mask-1440.png'});}
     if(progress===0)check('Intro returns to masked title',state.lines.every(l=>l.opacity<.6));
   }
   check('Intro contains three sentences in one shared stage',await page.locator('.intro-reading-stage .intro-sentence').count()===3);

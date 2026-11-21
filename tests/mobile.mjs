@@ -50,7 +50,7 @@ for(const [name,engine,device,options] of [
       await page.locator('.hero-next').click();await page.waitForTimeout(650);
       check('Hero mobile next control updates counter',await page.locator('.hero-count').innerText()==='2 / 6');
     }
-    check('Mobile hero controls fit at lower right',await page.locator('.hero-controls').evaluate(el=>{const b=el.getBoundingClientRect();return b.right<=innerWidth&&b.left>innerWidth/2&&b.bottom<=innerHeight&&b.bottom>innerHeight-60;}));
+    check('Mobile hero controls fit at lower right',await page.locator('.hero-controls').evaluate(el=>{const b=el.getBoundingClientRect(),last=el.querySelector('.hero-next').getBoundingClientRect(),progress=document.querySelector('.hero-progress').getBoundingClientRect();return b.right<=innerWidth&&b.left>progress.right&&last.left>innerWidth/2&&b.bottom<=innerHeight&&b.bottom>innerHeight-60&&[...el.querySelectorAll('button')].every(button=>button.getBoundingClientRect().width>=44);}));
     if(engine===chromium)await page.screenshot({path:'docs/screenshots/hero-swipe-mobile.png'});
     const introPin=await page.evaluate(()=>{const t=ScrollTrigger.getById('introduction');return {start:t.start,end:t.end};});
     for(const progress of [.2,.7,1,.2]){
@@ -58,7 +58,7 @@ for(const [name,engine,device,options] of [
       await page.waitForTimeout(800);
       check('Mobile intro pins forward/reverse '+progress,await page.locator('.intro-stage').evaluate(el=>Math.abs(el.getBoundingClientRect().top)<2));
       check('Mobile intro has no horizontal overflow '+progress,await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));
-      if(progress===1)check('Mobile title fully reveals without photos',await page.locator('.intro-narrative').evaluate(el=>!el.querySelector('img')&&[...el.querySelectorAll('.intro-mask-text')].every(line=>getComputedStyle(line).opacity==='1')));
+      if(progress===1){check('Mobile title fully reveals without photos',await page.locator('.intro-narrative').evaluate(el=>!el.querySelector('img')&&[...el.querySelectorAll('.intro-mask-text')].every(line=>getComputedStyle(line).opacity==='1')));check('Mobile narrative highlights life, seasons and memory',await page.locator('.intro-highlight').evaluateAll(words=>words.map(el=>el.textContent).join('/')==='삶/계절/기억'&&words.every(el=>getComputedStyle(el).backgroundColor==='rgb(240, 130, 58)'&&getComputedStyle(el).color==='rgb(18, 18, 18)')));}
     }
     const readingPin=await page.evaluate(()=>{const t=ScrollTrigger.getById('intro-reading');return {start:t.start,end:t.end};});
     for(const [progress,index] of [[.1,0],[.5,1],[.9,2]]){

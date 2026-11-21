@@ -6,6 +6,7 @@
 .intro-mask { position:relative; display:block; overflow:clip; }
 .intro-mask-base { position:absolute; inset:0; opacity:.55; }
 .intro-mask-text { display:block; }
+.intro-highlight { color:var(--text-primary); background:var(--surface-brand); -webkit-box-decoration-break:clone; box-decoration-break:clone; }
 .intro-narrative.is-pinned { height:240svh; }
 .intro-narrative.is-pinned .intro-stage { position:sticky; top:0; }
 .intro.intro-reading { padding:0; background:var(--neutral-0); }

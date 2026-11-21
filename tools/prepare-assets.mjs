@@ -13,7 +13,7 @@ for (const [src, dest] of [
   ['aos/LICENSE', 'aos.LICENSE'],
 ]) await copyFile(path.join(root, 'node_modules', src), path.join(target, dest));
 await mkdir(path.join(target, 'icons'), { recursive: true });
-for (const icon of ['arrow-up-right', 'arrow-right', 'arrow-left', 'arrow-down', 'plus', 'minus', 'menu', 'x', 'check', 'copy', 'search', 'play', 'rotate-ccw', 'image', 'file-text', 'video', 'download', 'chevron-down', 'chevron-right']) {
+for (const icon of ['arrow-up-right', 'arrow-right', 'arrow-left', 'arrow-down', 'plus', 'minus', 'menu', 'x', 'check', 'copy', 'search', 'play', 'pause', 'rotate-ccw', 'image', 'file-text', 'video', 'download', 'chevron-down', 'chevron-right']) {
   await copyFile(path.join(root, 'node_modules/lucide-static/icons', `${icon}.svg`), path.join(target, 'icons', `${icon}.svg`));
 }
 await mkdir(path.join(root, 'public/media/s'), { recursive: true });
