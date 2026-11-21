@@ -35,7 +35,6 @@ body[data-page=home] .nojs-navigation { position:absolute; top:var(--header-heig
 .site-header .header-join { min-height:44px; margin-left:auto; padding:11px 20px; font-size:15px; white-space:nowrap; }
 .site-header.is-over-hero .header-join:hover { background:var(--surface-page); color:var(--text-primary); }
 .program-card h3 { margin-top:80px; }
-.story-card-link:hover h3 { text-decoration:underline; text-underline-offset:6px; }
 .empty-state { padding:32px; }
 .wordmark,.footer-brand { white-space:nowrap; }
 .site-header .wordmark,.menu-top .wordmark { display:inline-flex; align-items:center; min-height:44px; padding-block:8px; font-size:20px; }
