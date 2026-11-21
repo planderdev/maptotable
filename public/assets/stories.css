@@ -4,7 +4,7 @@
 .stories-exhibition { position:relative; display:grid; grid-template-columns:1fr; isolation:isolate; }
 .stories-title-layer { position:sticky; grid-area:1 / 1; align-self:start; top:0; display:grid; place-items:center; height:100svh; margin-bottom:0; pointer-events:none; z-index:0; }
 .stories-title-layer .section-heading { max-width:30vw; margin:0; text-align:center; }
-.stories-title-layer h2 { font-size:clamp(56px,6.5vw,120px); font-weight:650; line-height:1.12; letter-spacing:-.055em; color:var(--text-primary); }
+.stories-title-layer h2 { font-size:clamp(56px,6.5vw,120px); font-weight:650; line-height:1.12; letter-spacing:-.055em; color:var(--brand-orange); }
 .stories-title-layer h2 span { display:block; }
 .story-grid.story-grid--rise { position:relative; grid-area:1 / 1; z-index:1; display:grid; grid-template-columns:minmax(0,1fr) minmax(0,.95fr) minmax(0,1fr); gap:0 clamp(24px,3.5vw,64px); align-items:start; padding-top:12svh; padding-bottom:24svh; }
 .story-grid--rise .story-card:nth-child(n) { grid-column:3; margin:0; align-self:start; min-width:0; }
