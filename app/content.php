@@ -35,10 +35,10 @@ return [
         ['id' => 6, 'label' => '이야기 06', 'status' => 'pending', 'name' => '', 'food' => '', 'legacyColor' => '#8a8a8a', 'cover' => null, 'photos' => []],
     ],
     'questions' => [
-        ['title' => '주민의 음식', 'ask' => '주민이 소개한 음식 가운데 무엇이 기억에 남았나요?'],
-        ['title' => '당시의 삶과 지역', 'ask' => '그 음식에 담긴 돌봄, 일상, 계절 가운데 무엇이 보였나요?'],
-        ['title' => '나의 비슷한 기억', 'ask' => '나에게도 비슷한 기억이 있나요?'],
-        ['title' => '나의 음식 이야기', 'ask' => '나의 음식 이야기를 기록해 주세요.'],
+        ['title' => '주민의 음식', 'ask' => '주민이 소개한 음식 가운데 무엇이 기억에 남았나요?', 'icon' => 'utensils'],
+        ['title' => '당시의 삶과 지역', 'ask' => '그 음식에 담긴 돌봄, 일상, 계절 가운데 무엇이 보였나요?', 'icon' => 'map-pin'],
+        ['title' => '나의 비슷한 기억', 'ask' => '나에게도 비슷한 기억이 있나요?', 'icon' => 'history'],
+        ['title' => '나의 음식 이야기', 'ask' => '나의 음식 이야기를 기록해 주세요.', 'icon' => 'notebook-pen'],
     ],
     'programs' => [
         ['title' => '푸드텔링 워크숍', 'body' => '기업과 기관의 목적, 인원, 시간에 맞춰 기획하고 운영합니다.', 'audience' => '기업, 기관 단체', 'image' => 'workshop', 'icon' => 'file-text'],

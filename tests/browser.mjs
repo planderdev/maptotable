@@ -108,13 +108,13 @@ try {
     const state=await page.evaluate(()=>({stage:document.querySelector('.intro-reading-stage').getBoundingClientRect().top,header:document.querySelector('.site-header').offsetHeight,rows:[...document.querySelectorAll('.intro-sentence')].map(el=>el.getBoundingClientRect().left),font:parseFloat(getComputedStyle(document.querySelector('.intro-sentence-text')).fontSize)}));
     check(`Reading stage stays below header at ${progress}`,Math.abs(state.stage-state.header)<2);
     check(`Reading sentence ${index+1} centered on forward/reverse scroll`,Math.abs(state.rows[index])<1&&state.rows.every((x,i)=>i===index||Math.abs(x)>100));
-    check(`Reading font limited to 38px at ${progress}`,state.font<=38);
-    check(`Reading text, marquee and CTA share one screen at ${progress}`,await page.locator('.intro-reading-stage').evaluate((stage,index)=>{const rect=el=>el.getBoundingClientRect(),window=rect(stage.querySelector('.intro-sentence-window')),text=rect(stage.querySelectorAll('.intro-sentence-text')[index]),photos=rect(stage.querySelector('.photo-marquee')),button=rect(stage.querySelector('.intro-reading-actions a'));return text.top>=window.top&&text.bottom<=window.bottom&&window.bottom<=photos.top&&photos.bottom<button.top&&button.bottom<=innerHeight&&photos.width<=innerWidth;},index));
+    check(`Reading font limited to 34px at ${progress}`,state.font<=34);
+    check(`Reading text and marquee share one screen at ${progress}`,await page.locator('.intro-reading-stage').evaluate((stage,index)=>{const rect=el=>el.getBoundingClientRect(),window=rect(stage.querySelector('.intro-sentence-window')),text=rect(stage.querySelectorAll('.intro-sentence-text')[index]),photos=rect(stage.querySelector('.photo-marquee'));return text.top>=window.top&&text.bottom<=window.bottom&&window.bottom<=photos.top&&photos.bottom<=innerHeight&&photos.width<=innerWidth;},index));
     if(progress===.5&&index===1)await page.screenshot({path:'docs/screenshots/intro-horizontal-1440.png'});
   }
   await page.evaluate(readingPin=>{scrollTo(0,readingPin.start+(readingPin.end-readingPin.start)*1.1/3.6);ScrollTrigger.update();},readingPin);await page.waitForTimeout(800);
   check('Reading transition slides horizontally',await page.locator('.intro-sentence').evaluateAll(rows=>rows[0].getBoundingClientRect().left < -100&&rows[1].getBoundingClientRect().left>100));
-  check('Story browse CTA turns dark on the primary reading background',await page.locator('.intro-reading-actions a').evaluate(el=>el.classList.contains('button--dark')&&!el.classList.contains('button--primary')&&el.getAttribute('href')==='#list'&&getComputedStyle(el).backgroundColor==='rgb(18, 18, 18)'&&getComputedStyle(el.closest('.intro-reading')).backgroundColor==='rgb(240, 130, 58)'&&el.closest('.intro-reading-actions').previousElementSibling.matches('.photo-marquee')));
+  check('Reading background stays primary without the removed CTA',await page.locator('.intro-reading').evaluate(el=>!el.querySelector('.intro-reading-actions,button,.button')&&getComputedStyle(el).backgroundColor==='rgb(240, 130, 58)'));
   await page.locator('[data-marquee]').scrollIntoViewIfNeeded();await page.mouse.move(0,0);
   await page.waitForTimeout(150);const marqueeBefore=await page.locator('.photo-marquee-track').evaluate(el=>getComputedStyle(el).transform);
   await page.waitForTimeout(400);

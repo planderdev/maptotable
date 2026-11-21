@@ -201,22 +201,13 @@
     const wrap = $('.intro-reading-sequence');
     if (!wrap || !window.gsap || !window.ScrollTrigger) return;
     const section = wrap.closest('.intro-reading'), stage = $('.intro-reading-stage', wrap), rows = $$('.intro-sentence', wrap);
-    const button = section && $('.intro-reading-actions .button', section);
-    if (rows.length < 2 || !section || !button) return;
+    if (rows.length < 2 || !section) return;
     const mm = gsap.matchMedia();
     mm.add('(prefers-reduced-motion: no-preference)', () => {
       wrap.classList.add('is-pinned');
-      let branded = false;
-      function theme(active) {
-        if (branded === active) return;
-        branded = active;
-        button.classList.toggle('button--primary', !active);
-        button.classList.toggle('button--dark', active);
-      }
       gsap.set(rows, { xPercent: 100 });
       gsap.set(rows[0], { xPercent: 0 });
       const timeline = gsap.timeline({
-        onUpdate() { theme(this.progress() > 0); },
         scrollTrigger: {
           id: 'intro-reading', trigger: wrap,
           start: () => `top top+=${$('.site-header').offsetHeight}`,
@@ -232,7 +223,7 @@
           .to(row, { xPercent: 0, duration: .6, ease: 'power1.inOut' }, at)
           .to({}, { duration: .8 });
       });
-      return () => { wrap.classList.remove('is-pinned'); theme(false); };
+      return () => wrap.classList.remove('is-pinned');
     });
     cleanups.push(() => mm.revert());
   }
