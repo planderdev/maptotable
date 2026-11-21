@@ -163,14 +163,23 @@
   function reading() {
     const wrap = $('.intro-reading-sequence');
     if (!wrap || !window.gsap || !window.ScrollTrigger) return;
-    const stage = $('.intro-reading-stage', wrap), rows = $$('.intro-sentence', wrap);
-    if (rows.length < 2) return;
+    const section = wrap.closest('.intro-reading'), stage = $('.intro-reading-stage', wrap), rows = $$('.intro-sentence', wrap);
+    const button = section && $('.intro-reading-actions .button', section);
+    if (rows.length < 2 || !section || !button) return;
     const mm = gsap.matchMedia();
     mm.add('(prefers-reduced-motion: no-preference)', () => {
       wrap.classList.add('is-pinned');
+      let branded = false;
+      function theme(active) {
+        if (branded === active) return;
+        branded = active;
+        button.classList.toggle('button--primary', !active);
+        button.classList.toggle('button--dark', active);
+      }
       gsap.set(rows, { xPercent: 100 });
       gsap.set(rows[0], { xPercent: 0 });
       const timeline = gsap.timeline({
+        onUpdate() { theme(this.progress() > 0); },
         scrollTrigger: {
           id: 'intro-reading', trigger: wrap,
           start: () => `top top+=${$('.site-header').offsetHeight}`,
@@ -178,14 +187,15 @@
           scrub: .45, invalidateOnRefresh: true,
         },
       });
-      timeline.to({}, { duration: .8 });
+      timeline.to(section, { backgroundColor: getComputedStyle(section).getPropertyValue('--brand-orange').trim(), duration: .6, ease: 'none' }, 0)
+        .to({}, { duration: .8 }, 0);
       rows.slice(1).forEach((row, i) => {
         const at = timeline.duration();
         timeline.to(rows[i], { xPercent: -100, duration: .6, ease: 'power1.inOut' }, at)
           .to(row, { xPercent: 0, duration: .6, ease: 'power1.inOut' }, at)
           .to({}, { duration: .8 });
       });
-      return () => wrap.classList.remove('is-pinned');
+      return () => { wrap.classList.remove('is-pinned'); theme(false); };
     });
     cleanups.push(() => mm.revert());
   }

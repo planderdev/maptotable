@@ -67,7 +67,7 @@ for(const [name,engine,device,options] of [
       check(`Mobile sentence ${index+1}, photos and button remain together`,await page.locator('.intro-reading-stage').evaluate((stage,index)=>{const text=stage.querySelectorAll('p')[index].getBoundingClientRect(),window=stage.querySelector('.intro-sentence-window').getBoundingClientRect(),photos=stage.querySelector('.photo-marquee').getBoundingClientRect(),button=stage.querySelector('.intro-reading-actions a').getBoundingClientRect();return text.bottom<=window.bottom&&window.bottom<=photos.top&&photos.bottom<button.top&&button.bottom<=innerHeight&&photos.left>=0&&photos.right<=innerWidth;},index));
       if(engine===chromium&&index===1)await page.screenshot({path:'docs/screenshots/intro-horizontal-mobile.png'});
     }
-    check('Mobile browse primary follows marquee',await page.locator('.intro-reading-actions a').evaluate(el=>el.classList.contains('button--primary')&&el.closest('.intro-reading-actions').previousElementSibling.matches('.photo-marquee')));
+    check('Mobile browse turns dark on the primary reading background',await page.locator('.intro-reading-actions a').evaluate(el=>el.classList.contains('button--dark')&&!el.classList.contains('button--primary')&&getComputedStyle(el).backgroundColor==='rgb(18, 18, 18)'&&getComputedStyle(el.closest('.intro-reading')).backgroundColor==='rgb(240, 130, 58)'&&el.closest('.intro-reading-actions').previousElementSibling.matches('.photo-marquee')));
     await page.goto('http://127.0.0.1:8080/index.html#list',{waitUntil:'networkidle'});
     const storyTop=await page.locator('#list').evaluate(el=>el.getBoundingClientRect().top+scrollY);
     await page.waitForTimeout(600);

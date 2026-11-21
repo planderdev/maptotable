@@ -108,7 +108,7 @@ try {
   }
   await page.evaluate(readingPin=>{scrollTo(0,readingPin.start+(readingPin.end-readingPin.start)*1.1/3.6);ScrollTrigger.update();},readingPin);await page.waitForTimeout(800);
   check('Reading transition slides horizontally',await page.locator('.intro-sentence').evaluateAll(rows=>rows[0].getBoundingClientRect().left < -100&&rows[1].getBoundingClientRect().left>100));
-  check('Story browse CTA is primary below marquee',await page.locator('.intro-reading-actions a').evaluate(el=>el.classList.contains('button--primary')&&el.getAttribute('href')==='#list'&&getComputedStyle(el).backgroundColor==='rgb(240, 130, 58)'&&el.closest('.intro-reading-actions').previousElementSibling.matches('.photo-marquee')));
+  check('Story browse CTA turns dark on the primary reading background',await page.locator('.intro-reading-actions a').evaluate(el=>el.classList.contains('button--dark')&&!el.classList.contains('button--primary')&&el.getAttribute('href')==='#list'&&getComputedStyle(el).backgroundColor==='rgb(18, 18, 18)'&&getComputedStyle(el.closest('.intro-reading')).backgroundColor==='rgb(240, 130, 58)'&&el.closest('.intro-reading-actions').previousElementSibling.matches('.photo-marquee')));
   await page.locator('[data-marquee]').scrollIntoViewIfNeeded();await page.mouse.move(0,0);
   await page.waitForTimeout(150);const marqueeBefore=await page.locator('.photo-marquee-track').evaluate(el=>getComputedStyle(el).transform);
   await page.waitForTimeout(400);
@@ -143,13 +143,14 @@ try {
   }
   await page.locator('#program').scrollIntoViewIfNeeded();
   const rail=page.locator('.program-carousel .swiper');
+  const railStart=await rail.evaluate(el=>el.swiper.translate);
   await rail.focus(); await page.keyboard.press('ArrowRight'); await page.waitForTimeout(450);
-  check('Carousel keyboard',await rail.evaluate(el=>el.swiper.activeIndex)>0);
+  check('Carousel keyboard moves the rail left',(await rail.evaluate(el=>el.swiper.translate))<railStart-1);
   await page.locator('.carousel-prev').first().click();await page.waitForTimeout(450);
-  check('Carousel previous button',await rail.evaluate(el=>el.swiper.activeIndex)===0);
+  check('Carousel previous button restores the rail',Math.abs((await rail.evaluate(el=>el.swiper.translate))-railStart)<1);
   const box=await rail.boundingBox();
   await page.mouse.move(box.x+box.width*.75,box.y+180);await page.mouse.down();await page.mouse.move(box.x+box.width*.2,box.y+180,{steps:15});await page.mouse.up();await page.waitForTimeout(500);
-  check('Carousel mouse drag',await rail.evaluate(el=>el.swiper.activeIndex)>0);
+  check('Carousel mouse drag moves the rail left',(await rail.evaluate(el=>el.swiper.translate))<railStart-1);
   for (const id of [1,2,3]) {
     await load(`/story.html?id=${id}`);
     check(`Story ${id} next published`,await page.locator('.next-story>a').first().getAttribute('href')===`/story.html?id=${id===3?1:id+1}`);
