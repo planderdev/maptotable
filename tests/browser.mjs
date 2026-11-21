@@ -103,6 +103,7 @@ try {
     check(`Reading stage stays below header at ${progress}`,Math.abs(state.stage-state.header)<2);
     check(`Reading sentence ${index+1} centered on forward/reverse scroll`,Math.abs(state.rows[index])<1&&state.rows.every((x,i)=>i===index||Math.abs(x)>100));
     check(`Reading font limited to 38px at ${progress}`,state.font<=38);
+    check(`Reading text, marquee and CTA share one screen at ${progress}`,await page.locator('.intro-reading-stage').evaluate((stage,index)=>{const rect=el=>el.getBoundingClientRect(),window=rect(stage.querySelector('.intro-sentence-window')),text=rect(stage.querySelectorAll('.intro-sentence-text')[index]),photos=rect(stage.querySelector('.photo-marquee')),button=rect(stage.querySelector('.intro-reading-actions a'));return text.top>=window.top&&text.bottom<=window.bottom&&window.bottom<=photos.top&&photos.bottom<button.top&&button.bottom<=innerHeight&&photos.width<=innerWidth;},index));
     if(progress===.5&&index===1)await page.screenshot({path:'docs/screenshots/intro-horizontal-1440.png'});
   }
   await page.evaluate(readingPin=>{scrollTo(0,readingPin.start+(readingPin.end-readingPin.start)*1.1/3.6);ScrollTrigger.update();},readingPin);await page.waitForTimeout(800);

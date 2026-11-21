@@ -9,22 +9,25 @@
 .intro-narrative.is-pinned { height:240svh; }
 .intro-narrative.is-pinned .intro-stage { position:sticky; top:0; }
 .intro.intro-reading { padding:0; background:var(--neutral-0); }
-.intro-reading-stage { padding:64px var(--layout-gutter); }
-.intro-sentence { display:grid; place-items:center; padding-block:32px; }
+.intro-reading-stage { padding-block:64px; }
+.intro-sentence { display:grid; place-items:center; padding:32px var(--layout-gutter); }
 .intro-sentence-inner { width:min(100%,960px); text-align:center; }
 .intro-sentence-text { margin:0; color:var(--text-primary); font-size:clamp(28px,2.65vw,38px); font-weight:600; line-height:1.6; letter-spacing:-.04em; word-break:keep-all; text-wrap:balance; }
 .intro-reading-sequence.is-pinned { height:280svh; }
-.intro-reading-sequence.is-pinned .intro-reading-stage { position:sticky; top:var(--header-height); display:grid; height:calc(100svh - var(--header-height)); padding:0; overflow:clip; }
-.intro-reading-sequence.is-pinned .intro-sentence { grid-area:1/1; width:100%; height:100%; min-width:0; padding:32px var(--layout-gutter); }
-.intro-reading-actions { display:flex; justify-content:center; padding-bottom:96px; }
-.photo-marquee { --marquee-gap:24px; overflow-x:auto; overflow-y:hidden; padding-block:40px; scrollbar-width:none; }
+.intro-reading-sequence.is-pinned .intro-reading-stage { position:sticky; top:var(--header-height); display:grid; grid-template-columns:minmax(0,1fr); grid-template-rows:minmax(0,1fr) auto auto; gap:clamp(16px,2.2svh,24px); height:calc(100svh - var(--header-height)); padding-block:clamp(24px,3.5svh,40px); overflow:clip; }
+.intro-reading-sequence.is-pinned .intro-reading-stage { padding-bottom:max(clamp(24px,3.5svh,40px),env(safe-area-inset-bottom)); }
+.intro-reading-sequence.is-pinned .intro-sentence-window { display:grid; width:100%; min-width:0; min-height:0; overflow:clip; }
+.intro-reading-sequence.is-pinned .intro-sentence { grid-area:1/1; width:100%; height:100%; min-width:0; padding:0 var(--layout-gutter); }
+.intro-reading-sequence.is-pinned .photo-marquee { margin-block:0; }
+.intro-reading-actions { display:flex; justify-content:center; }
+.photo-marquee { --marquee-gap:24px; width:100%; min-width:0; overflow-x:auto; overflow-y:hidden; margin-block:32px; scrollbar-width:none; }
 .photo-marquee.is-enhanced { overflow:clip; }
 .photo-marquee:focus-visible { outline:2px solid var(--text-primary); outline-offset:-4px; }
 .photo-marquee-track { display:flex; align-items:center; width:max-content; animation:photos-left 50s linear infinite; animation-play-state:paused; }
 .photo-marquee.is-running .photo-marquee-track { animation-play-state:running; }
 .photo-marquee:is(:hover,:focus-within) .photo-marquee-track { animation-play-state:paused; }
 .photo-marquee-group { display:flex; align-items:center; gap:var(--marquee-gap); padding-right:var(--marquee-gap); flex-shrink:0; }
-.photo-marquee-item { width:clamp(240px,28vw,480px); aspect-ratio:4/3; flex-shrink:0; margin:0; overflow:hidden; }
+.photo-marquee-item { width:clamp(180px,min(25vw,35svh),420px); aspect-ratio:4/3; flex-shrink:0; margin:0; overflow:hidden; }
 .photo-marquee-item .responsive-image { width:100%; height:100%; object-fit:cover; }
 @keyframes photos-left { to { transform:translateX(-50%); } }
 body[data-page=home] main > .media-interlude { margin:0; }
@@ -48,25 +51,34 @@ body[data-page=home] main > .media-interlude { margin:0; }
   .intro-narrative.is-pinned { height:200svh; }
   .intro-reading-stage { padding-block:40px; }
   .intro-reading-sequence.is-pinned { height:260svh; }
-  .intro-reading-sequence.is-pinned .intro-sentence { padding-block:24px; }
-  .intro-sentence-text { font-size:clamp(24px,6.2vw,30px); }
-  .intro-reading-actions { padding-bottom:64px; }
-  .photo-marquee { --marquee-gap:16px; padding-block:24px 32px; }
+  .intro-reading-sequence.is-pinned .intro-reading-stage { padding-block:clamp(16px,2.5svh,24px); gap:clamp(12px,2svh,20px); }
+  .intro-reading-sequence.is-pinned .intro-reading-stage { padding-bottom:max(clamp(16px,2.5svh,24px),env(safe-area-inset-bottom)); }
+  .intro-sentence-text { font-size:clamp(20px,5.8vw,26px); line-height:1.55; }
+  .photo-marquee { --marquee-gap:16px; }
   .photo-marquee-track { animation-duration:40s; }
-  .photo-marquee-item { width:220px; }
+  .photo-marquee-item { width:clamp(160px,min(64vw,32svh),240px); }
   .video-statement { font-size:clamp(25px,6.5vw,44px); padding-inline:var(--layout-gutter); }
   .video-statement span:last-child { max-width:14em; text-wrap:balance; }
 }
 @media(max-height:600px) { .intro-stage { min-height:100svh; }.intro-statement { font-size:clamp(24px,7svh,64px); } }
-@media(max-height:500px) { .intro-sentence-text { font-size:clamp(18px,4.5svh,28px); }.media-interlude--immersive .ambient-video { min-height:100svh; }.video-statement { font-size:clamp(24px,5vw,40px); } }
+@media(max-height:500px) {
+  .intro-sentence-text { font-size:clamp(18px,4.5svh,28px); }
+  .intro-reading-sequence.is-pinned .intro-reading-stage { padding-block:8px; gap:8px; }
+  .intro-reading-sequence.is-pinned .intro-reading-stage { padding-bottom:max(8px,env(safe-area-inset-bottom)); }
+  .photo-marquee-item { width:clamp(104px,26svh,160px); }
+  .intro-reading-actions .button { min-height:44px; padding:12px 20px; font-size:14px; }
+  .media-interlude--immersive .ambient-video { min-height:100svh; }
+  .video-statement { font-size:clamp(24px,5vw,40px); }
+}
 @media(prefers-reduced-motion:reduce) {
   .intro-narrative.is-pinned { height:auto; }
   .intro-narrative.is-pinned .intro-stage { position:relative; }
   .intro-mask-text,.intro-sentence { transform:none!important; opacity:1!important; clip-path:none!important; }
   .intro-mask-base { visibility:hidden; }
   .intro-reading-sequence.is-pinned { height:auto; }
-  .intro-reading-sequence.is-pinned .intro-reading-stage { position:relative; top:0; display:block; height:auto; padding:64px var(--layout-gutter); overflow:visible; }
-  .intro-reading-sequence.is-pinned .intro-sentence { height:auto; padding:32px 0; }
+  .intro-reading-sequence.is-pinned .intro-reading-stage { position:relative; top:0; display:block; height:auto; padding-block:64px; overflow:visible; }
+  .intro-reading-sequence.is-pinned .intro-sentence-window { display:block; overflow:visible; }
+  .intro-reading-sequence.is-pinned .intro-sentence { height:auto; padding:32px var(--layout-gutter); }
   .photo-marquee.is-enhanced { overflow-x:auto; }
   .photo-marquee-track { animation:none; transform:none; }
   .photo-marquee-group[aria-hidden=true] { display:none; }

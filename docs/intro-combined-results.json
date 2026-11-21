@@ -1,0 +1,122 @@
+[
+  {
+    "engine": "Chrome",
+    "width": 1440,
+    "layout": {
+      "stage": {
+        "top": 80,
+        "bottom": 900,
+        "left": 0,
+        "right": 1440
+      },
+      "text": {
+        "top": 263.078125,
+        "bottom": 384.671875,
+        "left": 240,
+        "right": 1200
+      },
+      "photos": {
+        "top": 556.0625,
+        "bottom": 792.3125,
+        "left": 0,
+        "right": 1440
+      },
+      "button": {
+        "top": 812.109375,
+        "bottom": 868.5,
+        "left": 628.96875,
+        "right": 811.03125
+      }
+    }
+  },
+  {
+    "engine": "Chrome",
+    "width": 390,
+    "layout": {
+      "stage": {
+        "top": 72,
+        "bottom": 844,
+        "left": 0,
+        "right": 390
+      },
+      "text": {
+        "top": 270.328125,
+        "bottom": 375.515625,
+        "left": 16,
+        "right": 374
+      },
+      "photos": {
+        "top": 569.640625,
+        "bottom": 749.640625,
+        "left": 0,
+        "right": 390
+      },
+      "button": {
+        "top": 766.515625,
+        "bottom": 822.90625,
+        "left": 103.96875,
+        "right": 286.03125
+      }
+    }
+  },
+  {
+    "engine": "WebKit",
+    "width": 1440,
+    "layout": {
+      "stage": {
+        "top": 80,
+        "bottom": 900,
+        "left": 0,
+        "right": 1440
+      },
+      "text": {
+        "top": 264.078125,
+        "bottom": 384.078125,
+        "left": 240,
+        "right": 1200
+      },
+      "photos": {
+        "top": 556.453125,
+        "bottom": 792.703125,
+        "left": 0,
+        "right": 1440
+      },
+      "button": {
+        "top": 812.5,
+        "bottom": 868.5,
+        "left": 628.96875,
+        "right": 811.03125
+      }
+    }
+  },
+  {
+    "engine": "WebKit",
+    "width": 390,
+    "layout": {
+      "stage": {
+        "top": 72,
+        "bottom": 843.984375,
+        "left": 0,
+        "right": 390
+      },
+      "text": {
+        "top": 270.609375,
+        "bottom": 375.609375,
+        "left": 16,
+        "right": 374
+      },
+      "photos": {
+        "top": 570.015625,
+        "bottom": 750.015625,
+        "left": 0,
+        "right": 390
+      },
+      "button": {
+        "top": 766.890625,
+        "bottom": 822.890625,
+        "left": 103.96875,
+        "right": 286.03125
+      }
+    }
+  }
+]

@@ -26,9 +26,11 @@ siteHeader();
     </section>
     <section class="intro intro-reading" id="introduction" aria-label="전시 소개">
         <?php $sentences = array_merge(preg_split('/(?<=[.!?])\s+/u', $content['intro']['body']) ?: [], [$content['intro']['operator']]); ?>
-        <div class="intro-reading-sequence"><div class="intro-reading-stage"><?php foreach ($sentences as $sentence): ?><div class="intro-sentence"><div class="intro-sentence-inner"><p class="intro-sentence-text"><?= e($sentence) ?></p></div></div><?php endforeach; ?></div></div>
-        <div class="photo-marquee" tabindex="0" role="region" aria-label="주민 사진 모음. 마우스를 올리거나 키보드 초점을 두면 움직임이 멈춥니다." data-marquee><div class="photo-marquee-track"><?php for ($copy = 0; $copy < 2; $copy++): ?><div class="photo-marquee-group" <?= $copy ? 'aria-hidden="true" inert' : '' ?>><?php foreach ($content['sequence'] as $image): ?><figure class="photo-marquee-item"><?php photo($image, '', false, null, '(max-width:767px) 220px, 28vw'); ?></figure><?php endforeach; ?></div><?php endfor; ?></div></div>
-        <div class="intro-reading-actions container"><?php button('음식 이야기 둘러보기', '#list', 'primary'); ?></div>
+        <div class="intro-reading-sequence"><div class="intro-reading-stage">
+            <div class="intro-sentence-window"><?php foreach ($sentences as $sentence): ?><div class="intro-sentence"><div class="intro-sentence-inner"><p class="intro-sentence-text"><?= e($sentence) ?></p></div></div><?php endforeach; ?></div>
+            <div class="photo-marquee" tabindex="0" role="region" aria-label="주민 사진 모음. 마우스를 올리거나 키보드 초점을 두면 움직임이 멈춥니다." data-marquee><div class="photo-marquee-track"><?php for ($copy = 0; $copy < 2; $copy++): ?><div class="photo-marquee-group" <?= $copy ? 'aria-hidden="true" inert' : '' ?>><?php foreach ($content['sequence'] as $image): ?><figure class="photo-marquee-item"><?php photo($image, '', false, null, '(max-width:767px) 240px, (max-width:1680px) 25vw, 420px'); ?></figure><?php endforeach; ?></div><?php endfor; ?></div></div>
+            <div class="intro-reading-actions container"><?php button('음식 이야기 둘러보기', '#list', 'primary'); ?></div>
+        </div></div>
     </section>
     <?php ambientVideo('ambient-sea', true); ?>
     <section class="stories-section stories-rise" id="list" aria-labelledby="stories-title">
