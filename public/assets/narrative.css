@@ -27,7 +27,7 @@
 .photo-marquee.is-running .photo-marquee-track { animation-play-state:running; }
 .photo-marquee:is(:hover,:focus-within) .photo-marquee-track { animation-play-state:paused; }
 .photo-marquee-group { display:flex; align-items:center; gap:var(--marquee-gap); padding-right:var(--marquee-gap); flex-shrink:0; }
-.photo-marquee-item { width:clamp(180px,min(25vw,35svh),420px); aspect-ratio:4/3; flex-shrink:0; margin:0; overflow:hidden; }
+.photo-marquee-item { width:clamp(180px,min(25vw,35svh),420px); max-width:300px; aspect-ratio:4/3; flex-shrink:0; margin:0; overflow:hidden; }
 .photo-marquee-item .responsive-image { width:100%; height:100%; object-fit:cover; }
 @keyframes photos-left { to { transform:translateX(-50%); } }
 body[data-page=home] main > .media-interlude { margin:0; }
