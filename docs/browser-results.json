@@ -463,6 +463,10 @@
     "Local export works",
     "Demo sends no POST",
     "Mobile menu opens",
+    "Three Lucide menu lines animate into X",
+    "Opened menu logo and control match header positions",
+    "Mobile menu control has no border",
+    "Escape waits for reverse menu animation",
     "Mobile menu closes and restores focus",
     "English component search",
     "Korean component search",
@@ -496,6 +500,10 @@
     "WCAG automated rules pass"
   ],
   "accessibility": [
+    {
+      "path": "/join.html [open mobile menu]",
+      "violations": []
+    },
     {
       "path": "/index.html",
       "violations": []

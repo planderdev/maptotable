@@ -12,14 +12,78 @@
     clearTimeout(toastTimer); toastTimer = setTimeout(() => node.classList.remove('is-visible'), 4000);
   }
   function menu() {
-    const dialog = $('#mobile-menu'), toggle = $('.menu-toggle');
-    if (!dialog || !toggle) return;
-    toggle.addEventListener('click', () => { dialog.showModal(); toggle.setAttribute('aria-expanded', 'true'); });
-    const close = () => dialog.close();
-    dialog.addEventListener('keydown', event => { if (event.key === 'Escape') { event.preventDefault(); close(); } });
-    $('[data-menu-close]', dialog).addEventListener('click', close);
-    $$('a', dialog).forEach(a => a.addEventListener('click', close));
-    dialog.addEventListener('close', () => { toggle.setAttribute('aria-expanded', 'false'); toggle.focus({ preventScroll: true }); });
+    const dialog = $('#mobile-menu'), toggle = $('.menu-toggle'), header = $('.site-header');
+    if (!dialog || !toggle || !header) return;
+    const closer = $('[data-menu-close]', dialog), desktop = window.matchMedia('(min-width:768px)');
+    let frame, closeTimer, closing = false, afterClose = null, returnFocus = true;
+    function shape(open) {
+      toggle.classList.toggle('is-expanded', open); closer.classList.toggle('is-expanded', open);
+      toggle.setAttribute('aria-expanded', String(open));
+      toggle.setAttribute('aria-label', open ? '메뉴 닫기' : '메뉴 열기');
+    }
+    function align() { dialog.style.setProperty('--menu-header-width', `${header.getBoundingClientRect().width}px`); }
+    function activate() { dialog.classList.add('is-menu-open'); shape(true); }
+    function open() {
+      if (dialog.open) return;
+      returnFocus = true; closing = false; afterClose = null; align();
+      dialog.classList.remove('is-closing'); toggle.setAttribute('aria-expanded', 'true'); dialog.showModal();
+      if (reduce.matches) activate();
+      else frame = requestAnimationFrame(() => { frame = requestAnimationFrame(activate); });
+    }
+    function finishClose() {
+      if (!closing || !dialog.open) return;
+      clearTimeout(closeTimer);
+      const navigate = afterClose; afterClose = null;
+      dialog.close(); navigate?.();
+    }
+    function close({ navigate = null, immediate = false } = {}) {
+      if (!dialog.open) return;
+      if (closing) { if (immediate) finishClose(); return; }
+      const expanded = closer.classList.contains('is-expanded');
+      closing = true; afterClose = navigate; returnFocus = !navigate;
+      cancelAnimationFrame(frame); dialog.classList.remove('is-menu-open'); dialog.classList.add('is-closing'); shape(false);
+      if (immediate || reduce.matches || !expanded) finishClose();
+      else closeTimer = setTimeout(finishClose, 400);
+    }
+    function closed() {
+      clearTimeout(closeTimer); cancelAnimationFrame(frame); closing = false; afterClose = null;
+      dialog.classList.remove('is-menu-open', 'is-closing'); shape(false);
+      if (returnFocus) (desktop.matches ? $('.wordmark', header) : toggle).focus({ preventScroll: true });
+    }
+    function cancel(event) { event.preventDefault(); close(); }
+    function closeClick() { close(); }
+    function transitionEnd(event) {
+      if (!closing || event.propertyName !== 'transform') return;
+      const moving = $$('line', closer).some(line => line.getAnimations().some(animation => animation.playState === 'running'));
+      if (!moving) finishClose();
+    }
+    function key(event) {
+      if (event.key === 'Escape') { event.preventDefault(); close(); return; }
+      if (event.key !== 'Tab') return;
+      const targets = $$('a[href], button:not([disabled])', dialog).filter(node => node.getClientRects().length);
+      const first = targets[0], last = targets[targets.length - 1];
+      if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
+      else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
+    }
+    function navigate(event) {
+      const link = event.target.closest('a');
+      if (!link || event.button !== 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey || link.target === '_blank') return;
+      event.preventDefault(); close({ navigate: () => window.location.assign(link.href) });
+    }
+    function resize() { if (dialog.open) { align(); if (desktop.matches) close({ immediate: true }); } }
+    function motion() { if (reduce.matches && dialog.open) { cancelAnimationFrame(frame); if (closing) finishClose(); else activate(); } }
+    toggle.addEventListener('click', open); closer.addEventListener('click', closeClick);
+    closer.addEventListener('transitionend', transitionEnd);
+    dialog.addEventListener('cancel', cancel); dialog.addEventListener('close', closed); dialog.addEventListener('click', navigate);
+    dialog.addEventListener('keydown', key);
+    window.addEventListener('resize', resize); desktop.addEventListener('change', resize); reduce.addEventListener('change', motion);
+    cleanups.push(() => {
+      clearTimeout(closeTimer); cancelAnimationFrame(frame);
+      toggle.removeEventListener('click', open); closer.removeEventListener('click', closeClick); closer.removeEventListener('transitionend', transitionEnd);
+      dialog.removeEventListener('cancel', cancel); dialog.removeEventListener('close', closed); dialog.removeEventListener('click', navigate);
+      dialog.removeEventListener('keydown', key);
+      window.removeEventListener('resize', resize); desktop.removeEventListener('change', resize); reduce.removeEventListener('change', motion);
+    });
   }
   function opening() {
     const wrap = $('.opening'), element = $('.hero-slider', wrap || document);

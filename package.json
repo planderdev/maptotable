@@ -8,6 +8,7 @@
     "build": "node tools/prepare-assets.mjs && node tools/lint-php.mjs && php tools/check.php",
     "lint": "node tools/lint-php.mjs",
     "test:mobile": "node tests/mobile.mjs",
+    "test:menu": "node tests/menu.mjs",
     "test:media": "node tests/media-smoke.mjs",
     "optimize:images": "node tools/optimize-images.mjs",
     "test": "node tests/browser.mjs",

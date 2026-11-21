@@ -28,9 +28,6 @@
 body[data-page=home] .site-header { position:absolute; inset:0 0 auto; width:100%; background:transparent; color:var(--text-inverse); }
 body[data-page=home].has-hero-header .site-header { position:fixed; background:var(--navigation-bg); color:var(--text-primary); transition:background 160ms,color 160ms; }
 body[data-page=home].has-hero-header .site-header.is-over-hero { background:transparent; color:var(--text-inverse); }
-body[data-page=home] .site-header .icon-button { border-color:rgba(255,255,255,.5); }
-body[data-page=home] .site-header.is-over-hero .icon-button:hover { background:rgba(0,0,0,.25); }
-body[data-page=home].has-hero-header .site-header:not(.is-over-hero) .icon-button { border-color:var(--border-default); }
 body[data-page=home] .site-header.is-over-hero :focus-visible { outline-color:var(--brand-orange); box-shadow:none; }
 body[data-page=home] .nojs-navigation { position:absolute; top:var(--header-height); left:0; right:0; z-index:var(--layer-header); }
 .button:not(:has(.icon)) { justify-content:center; gap:0; }
@@ -40,7 +37,7 @@ body[data-page=home] .nojs-navigation { position:absolute; top:var(--header-heig
 .story-card-link:hover h3 { text-decoration:underline; text-underline-offset:6px; }
 .empty-state { padding:32px; }
 .wordmark,.footer-brand { white-space:nowrap; }
-.site-header .wordmark { display:inline-flex; align-items:center; min-height:44px; font-size:20px; }
+.site-header .wordmark,.menu-top .wordmark { display:inline-flex; align-items:center; min-height:44px; padding-block:8px; font-size:20px; }
 @media(max-width:767px) {
   .hero--immersive .hero-title { font-size:clamp(48px,18.5vw,120px); letter-spacing:-.055em; line-height:1.12; margin-bottom:20px; white-space:normal; }
   .hero--immersive .hero-title span { display:block; }
@@ -50,7 +47,7 @@ body[data-page=home] .nojs-navigation { position:absolute; top:var(--header-heig
   .hero-count { margin-right:4px; }
   .hero-controls .icon-button { width:44px; height:44px; }
   .site-header { gap:8px; }
-  .site-header .wordmark { font-size:clamp(11px,3.3vw,13px); min-width:0; margin-right:auto; }
+  .site-header .wordmark,.menu-top .wordmark { font-size:clamp(11px,3.3vw,13px); min-width:0; margin-right:auto; }
   .site-header .header-join { display:inline-flex; min-height:44px; padding:10px 12px; font-size:13px; border-radius:12px; }
   .site-header .menu-toggle { flex:0 0 44px; }
   .empty-state { padding:24px; }

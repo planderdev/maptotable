@@ -1,0 +1,306 @@
+[
+  {
+    "engine": "Chrome",
+    "width": 360,
+    "original": {
+      "logo": {
+        "left": 16,
+        "top": 14,
+        "width": 102.875,
+        "height": 44
+      },
+      "button": {
+        "left": 300,
+        "top": 14,
+        "width": 44,
+        "height": 44
+      }
+    },
+    "opened": {
+      "logo": {
+        "left": 16,
+        "top": 14,
+        "width": 102.875,
+        "height": 44
+      },
+      "button": {
+        "left": 300,
+        "top": 14,
+        "width": 44,
+        "height": 44
+      },
+      "border": "0px",
+      "lines": [
+        {
+          "transform": "matrix(0, 0, -1, 0, 0, 0)",
+          "opacity": "0"
+        },
+        {
+          "transform": "matrix(0.707107, 0.707107, -0.707107, 0.707107, 0, 6)",
+          "opacity": "1"
+        },
+        {
+          "transform": "matrix(0.707107, -0.707107, 0.707107, 0.707107, 0, -6)",
+          "opacity": "1"
+        }
+      ]
+    },
+    "extras": [],
+    "status": "passed"
+  },
+  {
+    "engine": "Chrome",
+    "width": 390,
+    "original": {
+      "logo": {
+        "left": 16,
+        "top": 14,
+        "width": 111.453125,
+        "height": 44
+      },
+      "button": {
+        "left": 330,
+        "top": 14,
+        "width": 44,
+        "height": 44
+      }
+    },
+    "opened": {
+      "logo": {
+        "left": 16,
+        "top": 14,
+        "width": 111.453125,
+        "height": 44
+      },
+      "button": {
+        "left": 330,
+        "top": 14,
+        "width": 44,
+        "height": 44
+      },
+      "border": "0px",
+      "lines": [
+        {
+          "transform": "matrix(0, 0, -1, 0, 0, 0)",
+          "opacity": "0"
+        },
+        {
+          "transform": "matrix(0.707107, 0.707107, -0.707107, 0.707107, 0, 6)",
+          "opacity": "1"
+        },
+        {
+          "transform": "matrix(0.707107, -0.707107, 0.707107, 0.707107, 0, -6)",
+          "opacity": "1"
+        }
+      ]
+    },
+    "extras": [
+      "rapid open/close",
+      "forward/reverse focus trap",
+      "navigation after reverse animation",
+      "desktop resize reset"
+    ],
+    "status": "passed"
+  },
+  {
+    "engine": "Chrome",
+    "width": 767,
+    "original": {
+      "logo": {
+        "left": 30.671875,
+        "top": 14,
+        "width": 112.578125,
+        "height": 44
+      },
+      "button": {
+        "left": 692.328125,
+        "top": 14,
+        "width": 44,
+        "height": 44
+      }
+    },
+    "opened": {
+      "logo": {
+        "left": 30.671875,
+        "top": 14,
+        "width": 112.578125,
+        "height": 44
+      },
+      "button": {
+        "left": 692.328125,
+        "top": 14,
+        "width": 44,
+        "height": 44
+      },
+      "border": "0px",
+      "lines": [
+        {
+          "transform": "matrix(0, 0, -1, 0, 0, 0)",
+          "opacity": "0"
+        },
+        {
+          "transform": "matrix(0.707107, 0.707107, -0.707107, 0.707107, 0, 6)",
+          "opacity": "1"
+        },
+        {
+          "transform": "matrix(0.707107, -0.707107, 0.707107, 0.707107, 0, -6)",
+          "opacity": "1"
+        }
+      ]
+    },
+    "extras": [],
+    "status": "passed"
+  },
+  {
+    "engine": "WebKit",
+    "width": 360,
+    "original": {
+      "logo": {
+        "left": 16,
+        "top": 14,
+        "width": 103.609375,
+        "height": 44
+      },
+      "button": {
+        "left": 300,
+        "top": 14,
+        "width": 44,
+        "height": 44
+      }
+    },
+    "opened": {
+      "logo": {
+        "left": 16,
+        "top": 14,
+        "width": 103.609375,
+        "height": 44
+      },
+      "button": {
+        "left": 300,
+        "top": 14,
+        "width": 44,
+        "height": 44
+      },
+      "border": "0px",
+      "lines": [
+        {
+          "transform": "matrix(0, 0, -1, 0, 0, 0)",
+          "opacity": "0"
+        },
+        {
+          "transform": "matrix(0.707107, 0.707107, -0.707107, 0.707107, 0, 6)",
+          "opacity": "1"
+        },
+        {
+          "transform": "matrix(0.707107, -0.707107, 0.707107, 0.707107, 0, -6)",
+          "opacity": "1"
+        }
+      ]
+    },
+    "extras": [],
+    "status": "passed"
+  },
+  {
+    "engine": "WebKit",
+    "width": 390,
+    "original": {
+      "logo": {
+        "left": 16,
+        "top": 14,
+        "width": 112.25,
+        "height": 44
+      },
+      "button": {
+        "left": 329.984375,
+        "top": 14,
+        "width": 44,
+        "height": 44
+      }
+    },
+    "opened": {
+      "logo": {
+        "left": 16,
+        "top": 14,
+        "width": 112.25,
+        "height": 44
+      },
+      "button": {
+        "left": 330,
+        "top": 14,
+        "width": 44,
+        "height": 44
+      },
+      "border": "0px",
+      "lines": [
+        {
+          "transform": "matrix(0, 0, -1, 0, 0, 0)",
+          "opacity": "0"
+        },
+        {
+          "transform": "matrix(0.707107, 0.707107, -0.707107, 0.707107, 0, 6)",
+          "opacity": "1"
+        },
+        {
+          "transform": "matrix(0.707107, -0.707107, 0.707107, 0.707107, 0, -6)",
+          "opacity": "1"
+        }
+      ]
+    },
+    "extras": [
+      "rapid open/close",
+      "forward/reverse focus trap",
+      "navigation after reverse animation",
+      "desktop resize reset"
+    ],
+    "status": "passed"
+  },
+  {
+    "engine": "WebKit",
+    "width": 767,
+    "original": {
+      "logo": {
+        "left": 30.671875,
+        "top": 14,
+        "width": 113.375,
+        "height": 44
+      },
+      "button": {
+        "left": 692.3125,
+        "top": 14,
+        "width": 44,
+        "height": 44
+      }
+    },
+    "opened": {
+      "logo": {
+        "left": 30.671875,
+        "top": 14,
+        "width": 113.375,
+        "height": 44
+      },
+      "button": {
+        "left": 692.328125,
+        "top": 14,
+        "width": 44,
+        "height": 44
+      },
+      "border": "0px",
+      "lines": [
+        {
+          "transform": "matrix(0, 0, -1, 0, 0, 0)",
+          "opacity": "0"
+        },
+        {
+          "transform": "matrix(0.707107, 0.707107, -0.707107, 0.707107, 0, 6)",
+          "opacity": "1"
+        },
+        {
+          "transform": "matrix(0.707107, -0.707107, 0.707107, 0.707107, 0, -6)",
+          "opacity": "1"
+        }
+      ]
+    },
+    "extras": [],
+    "status": "passed"
+  }
+]

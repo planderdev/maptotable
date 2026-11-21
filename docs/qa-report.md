@@ -5,13 +5,15 @@
 ## 실행 검사
 
 - `npm run build`: 정적 에셋 준비, PHP 13개 문법 검사, 사진 소유 ID·질문 원문·브랜드 값·주소 파일·폰트 존재 검사 통과.
-- `npm test`: 239개 검사 통과. 네 화면의 AOS 요소를 실제 스크롤로 표시한 뒤 axe WCAG 2 A/AA, 2.1 AA 자동 검사에서 위반 0개.
-- `npm run test:mobile`: 100개 검사 통과. Pixel 7의 Chrome 터치 에뮬레이션과 Windows WebKit의 iPhone 13 뷰포트를 사용했습니다.
+- `npm test`: 243개 검사 통과. 네 화면의 AOS 요소를 실제 스크롤로 표시한 상태와 열린 모바일 메뉴, 총 다섯 axe WCAG 2 A/AA, 2.1 AA 검사에서 위반 0개.
+- `npm run test:mobile`: 110개 검사 통과. Pixel 7의 Chrome 터치 에뮬레이션과 Windows WebKit의 iPhone 13 뷰포트를 사용했습니다.
 - `npm run test:media`: 45개 검사 통과. 데스크톱 Chrome, Pixel 7 Chrome, iPhone 13 뷰포트의 WebKit에서 풀브리드 크기·오버레이·무음 인라인 자동재생·실제 재생 시간 증가·화면 밖 정지·재진입 재생·수동 정지 유지·모션 감소와 수동 재생을 확인했습니다.
 - 이전 클라우드 미리보기: 이전 정적 렌더링 버전의 30개 검사는 별도 이력입니다. 이번 핀·히어로 수정은 사용자의 로컬 서버 요청에 따라 로컬 PHP에만 적용했습니다.
 - `npm audit`: 알려진 취약점 0개. 고정 의존성 버전은 package-lock.json에 있습니다.
 
 ## 직접 브라우저 확인
+
+모바일 메뉴 버튼의 테두리를 없애고 Lucide 세 줄이 X로 회전하도록 변경했습니다. 닫기 버튼·ESC·메뉴 링크 선택은 역방향 전환을 마친 뒤 닫습니다. 열린 로고와 버튼의 x/y/폭/높이를 헤더와 비교해 1px 미만 차이로 일치하는지 확인했습니다. Chrome·WebKit의 360·390·767px, 총 여섯 구도를 `npm run test:menu`로 확인했으며 Tab·Shift+Tab 순환, 빠른 열기/닫기, 링크 이동, 데스크톱 폭으로 변경 후 닫기도 검증했습니다. 원본은 `docs/mobile-menu-results.json`입니다.
 
 소개 문장·4:3 마퀴·프라이머리 버튼을 하나의 고정 화면으로 통합했습니다. 각 문장 구간에서 세 요소가 동시에 화면 안에 있고 서로 겹치지 않는지 PC·모바일에서 검증했습니다. Chrome의 320×568·667×375 화면도 확인했으며 실제 Chrome 창에서도 세 요소를 함께 확인했습니다. 모바일 이야기는 첨부 레퍼런스처럼 중앙 제목 뒤로 두고, 약 절반 폭의 4:5 카드가 우·좌·우로 올라오는 구도로 조정했습니다.
 
@@ -44,7 +46,7 @@ AOS 적용 후 실제 브라우저에서 이야기 → 참여 구간을 스크�
 | 상세 | 공개 ID 1·2·3과 다음 링크 순환, 이야기별 참여 연결, 준비 중 ID 4의 HTTP 404 |
 | 참여 | 질문 순서, 빈칸 허용, 이전 입력 유지, 기본 비공개, 선택 유지, 단계 제목 포커스, HTML 입력 이스케이프 |
 | 참여의 저장 범위 | POST 없음, 서버 저장 주장 없음, 텍스트 내려받기 동작, 검수 내용 게시 없음 |
-| 메뉴 | dialog 열기·ESC 닫기·포커스 복귀, WebKit에서도 확인 |
+| 메뉴 | 테두리 없는 세 줄↔X 회전, 역방향 전환 후 닫기·ESC, 헤더와 로고/버튼 좌표 일치, Tab 초점 순환·복귀, 링크 이동·빠른 열기/닫기·리사이즈·모션 감소, Chrome·WebKit 확인 |
 | DS | 한글·영문 검색, 키보드 검색 결과 진입, 목차·해시, 실제 코드 복사, 모션 재생·초기화·감소 모드 |
 | 배경 영상 | 풀브리드 100svh·텍스트 오버레이, Pixabay 로컬 MP4 무음 자동 반복 재생·화면 버튼 없음·영상 클릭/키보드 정지·화면 밖 정지, 내부 출처 기록, 포스터·장면 설명 트랙, 화면 캡션·출처 링크 없음 |
 | 접근성 | 네 화면 axe 자동 위반 0개, 실제 색 대비 계산, 포커스·레이블·비공개 기본값 확인 |
@@ -69,6 +71,8 @@ Lighthouse 13.6.0, headless Chrome, `http://127.0.0.1:8080/`, 기본 simulated t
 상세 원본: `docs/lighthouse-mobile.report.html`, `docs/lighthouse-mobile.report.json`, `docs/lighthouse-desktop.report.html`, `docs/lighthouse-desktop.report.json`.
 
 ## 증빙과 재현
+
+- `docs/screenshots/menu-closed-mobile.png`, `menu-open-mobile.png`, `menu-closing-mobile.png`: 테두리 없는 메뉴 버튼, 열린 X, 역방향 전환 중간 상태.
 
 - `docs/screenshots/home-1440.png`, `home-390.png`, `hero-swipe-mobile.png`: 핀 없는 히어로 슬라이드, 우측 하단 숫자·좌우 버튼, 중앙 PC 메뉴.
 - `docs/screenshots/intro-mask-1440.png`: 사진 없는 제목 마스크의 마지막 장면.

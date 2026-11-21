@@ -53,6 +53,7 @@ rewrite ^/design-system/?$ /design-system.php last;
 | 풀블리드 100vh 히어로와 아이콘 사용 기준 | `public/assets/hero.css` |
 | 핀, 레일, 참여 단계, 검색·복사·데모 | `public/assets/site.js` |
 | AOS 등장 효과와 읽기 대안 | `public/assets/aos-overrides.css` |
+| 모바일 메뉴의 세 줄 회전·헤더 정렬 | `public/assets/menu.css` |
 | DS 문서 스타일 | `public/assets/design-system.css` |
 
 `public/assets/styles.php`는 실제 토큰, 폰트 선언, Swiper·AOS CSS와 공통 CSS를 한 응답으로 제공합니다. 개별 토큰 CSS는 `/assets/tokens.php`에서도 확인할 수 있습니다. DS에 별도의 복제 컴포넌트를 만들지 않았습니다.
@@ -95,6 +96,8 @@ python -m venv .runtime/font-tools
 
 AOS 2.3.4는 CDN 없이 `public/assets/vendor/`에서 제공합니다. 참여 안내·질문 목록, 프로그램 제목·카드, 영상 오버레이, 이야기 상세의 읽기 구간, 참여 페이지 소개와 푸터가 한 번씩 등장합니다. 기본 650ms, 시작 여유 64px, 카드별 지연 50ms이며 상승 거리는 데스크톱 16px·모바일 12px입니다. 히어로·소개 핀·스크럽 요소·Swiper 이동 래퍼·참여 입력 단계는 기존 모션과 겹치지 않게 적용 대상에서 제외했습니다. 키보드 초점은 즉시 표시하고, 모션 감소·JS 미사용·AOS 로드 실패에서도 내용을 바로 읽을 수 있습니다. 스크롤 구간 높이가 바뀌면 ScrollTrigger 갱신 후 AOS 위치도 갱신합니다.
 
+모바일 메뉴는 같은 Lucide 세 줄 SVG가 320ms 동안 회전해 X가 되며, 닫을 때 역방향 전환이 끝난 뒤 대화상자를 닫습니다. 메뉴 항목 이동도 전환 뒤 실행합니다. 로고와 44px 닫기 버튼은 헤더의 높이·여백·글자 크기를 공유하고 실제 헤더 폭에 맞춥니다. ESC·정방향/역방향 Tab·초점 복귀·데스크톱 리사이즈·모션 감소 설정을 처리합니다.
+
 ## 추가 에셋
 
 - 생성 정물: `public/assets/images/food-memory.png` 원본과 `.webp` 전송본. 내장 ImageGen을 사용했습니다. 사용자의 후속 요청에 따라 화면의 설명·출처 문구는 생략하고 대체 텍스트를 유지합니다. 프롬프트는 `docs/generated-image-prompt.txt`입니다.
@@ -110,6 +113,7 @@ AOS 2.3.4는 CDN 없이 `public/assets/vendor/`에서 제공합니다. 참여 �
 npm run build
 npm test
 npm run test:mobile
+npm run test:menu
 ```
 
 Chrome이 필요합니다. WebKit 검증은 `npx playwright install webkit`으로 엔진을 준비합니다. Windows WebKit과 Pixel 터치 에뮬레이션을 실제 iOS Safari·Android Chrome 기기 결과로 간주하지 않습니다.

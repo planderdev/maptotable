@@ -29,7 +29,14 @@ for(const [name,engine,device,options] of [
     }else{
       await page.locator('.carousel-next').click();await page.waitForTimeout(500);check('Gallery next button',await rail.evaluate(el=>el.swiper.activeIndex)>0);
     }
-    await page.locator('.menu-toggle').click();await page.keyboard.press('Escape');check('Menu closes',await page.locator('#mobile-menu').evaluate(el=>!el.open));
+    const menuOrigin=await page.locator('.site-header').evaluate(header=>({logo:header.querySelector('.wordmark').getBoundingClientRect().toJSON(),button:header.querySelector('.menu-toggle').getBoundingClientRect().toJSON()}));
+    await page.locator('.menu-toggle').click();
+    await page.waitForFunction(()=>{const button=document.querySelector('[data-menu-close]');return getComputedStyle(button.querySelector('line')).opacity==='0'&&[...button.querySelectorAll('line')].every(line=>line.getAnimations().every(animation=>animation.playState!=='running'));});
+    check('Mobile menu logo and close control preserve header geometry',await page.locator('#mobile-menu').evaluate((dialog,origin)=>{const targets={logo:dialog.querySelector('.wordmark'),button:dialog.querySelector('[data-menu-close]')};return Object.entries(targets).every(([part,el])=>{const r=el.getBoundingClientRect();return ['left','top','width','height'].every(key=>Math.abs(r[key]-origin[part][key])<1);});},menuOrigin));
+    check('Mobile close uses rotated Lucide lines without border',await page.locator('[data-menu-close]').evaluate(el=>getComputedStyle(el).borderWidth==='0px'&&el.querySelectorAll('line').length===3&&getComputedStyle(el.querySelector('line')).opacity==='0'));
+    await page.keyboard.press('Escape');check('Menu reverses before closing',await page.locator('#mobile-menu').evaluate(el=>el.open&&el.classList.contains('is-closing')));
+    await page.waitForFunction(()=>!document.querySelector('#mobile-menu').open&&document.activeElement===document.querySelector('.menu-toggle'));
+    check('Menu closes',await page.locator('#mobile-menu').evaluate(el=>!el.open));
     await page.goto('http://127.0.0.1:8080/',{waitUntil:'networkidle'});
     check('Mobile hero has no pinned scroll',await page.locator('.opening').evaluate(el=>!el.classList.contains('is-pinned')&&Math.abs(el.getBoundingClientRect().height-innerHeight)<2&&!ScrollTrigger.getById('opening')));
     if(engine===chromium){
@@ -103,6 +110,10 @@ for(const [name,engine,device,options] of [
     check('Reduced reading unpins and shows all sentences',await page.locator('.intro-reading-sequence').evaluate(el=>!el.classList.contains('is-pinned')&&[...el.querySelectorAll('.intro-sentence')].every(row=>getComputedStyle(row).transform==='none')));
     check('Reduced photo marquee stays static',await page.locator('.photo-marquee-track').evaluate(el=>getComputedStyle(el).animationName==='none'));
     check('Reduced motion retains three story links',await page.locator('.story-card[data-status=published] a').count()===3);
+    await page.locator('.menu-toggle').click();
+    check('Reduced menu opens with static X',await page.locator('[data-menu-close]').evaluate(el=>getComputedStyle(el.querySelector('line')).opacity==='0'&&el.querySelector('line').getAnimations().length===0));
+    await page.locator('[data-menu-close]').click();await page.waitForFunction(()=>!document.querySelector('#mobile-menu').open);
+    check('Reduced menu closes without delayed motion',await page.locator('#mobile-menu').evaluate(el=>!el.open));
     check('No JavaScript errors',errors.length===0);
     results.push({name,checks,errors,status:'passed'});
   }catch(e){results.push({name,checks,errors,status:'failed',failure:e.stack});process.exitCode=1;}
