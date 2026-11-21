@@ -16,8 +16,6 @@ SOURCES = {
     'join.js': 'https://map-to-table.vercel.app/js/join.js',
     'style.css': 'https://map-to-table.vercel.app/css/style.css',
     'design-system.html': 'https://map-to-table-ds.vercel.app/',
-    'reference-dminusone.html': 'https://www.dminusone.com/',
-    'reference-kanu.html': 'https://www.kanu.co.kr/limited-edition-2026kanubc',
 }
 
 def download(item):
