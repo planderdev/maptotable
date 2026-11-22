@@ -1,0 +1,18 @@
+# Vercel에 올리지 않는 것. 배포에는 api/, app/, public/ 만 필요하다.
+# 앞의 / 는 루트만 가리킨다. /media 는 원본 보관본이고 public/media 는 올라가야 한다.
+# package.json 이 올라가면 Vercel 이 npm run build (PHP 검사)를 돌리려다 실패한다.
+/package.json
+/package-lock.json
+/node_modules
+/docs
+/tests
+/tools
+/media
+/router.php
+/README.md
+.claude
+.git
+.gitignore
+.gitattributes
+.env*
+.DS_Store

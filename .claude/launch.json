@@ -1,0 +1,6 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    { "name": "maptotable", "runtimeExecutable": "php", "runtimeArgs": ["-S", "127.0.0.1:3230", "-t", "public", "api/index.php"], "port": 3230 }
+  ]
+}
