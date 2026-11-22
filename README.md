@@ -2,7 +2,7 @@
 
 PHP가 공통 콘텐츠와 컴포넌트를 렌더링하는 온라인 전시입니다. 메인, 공개 이야기 3개와 준비 상태, 5단계 참여 입력, 실제 소스를 공유하는 디자인시스템을 포함합니다. 기존 운영 사이트는 교체하지 않았습니다.
 
-현재 실행 기준은 아래의 로컬 PHP 서버입니다. 이전 클라우드 미리보기 이력은 `docs/qa-report.md`에 기록했습니다.
+로컬 PHP 서버로 실행하며, https://maptotable.vercel.app 에 배포되어 있습니다(아래 「Vercel 배포」). 이전 클라우드 미리보기 이력은 `docs/qa-report.md`에 기록했습니다.
 
 ## 실행
 
@@ -39,6 +39,53 @@ rewrite ^/design-system/?$ /design-system.php last;
 ```
 
 기존 `.html` 주소, 쿼리 ID와 `#top`, `#say`, `#list`, `#join`, `#program`을 유지합니다. 배포 루트(`/`)를 기준으로 작성했습니다. 하위 폴더 호스팅에는 base-path 조정이 필요합니다.
+
+## Vercel 배포
+
+- 주소: https://maptotable.vercel.app
+- Vercel 팀 `planderdevs-projects`의 프로젝트 `maptotable`이고, 이 저장소(`planderdev/maptotable`)에 연결되어 있습니다.
+
+**`main`에 푸시하면 운영 주소에 자동으로 배포됩니다.** 다른 브랜치와 PR은 미리보기 주소가 따로 만들어지며, 미리보기는 Vercel 로그인이 필요합니다. 별도의 빌드 과정은 없습니다.
+
+푸시 없이 지금 폴더의 상태를 올리려면 Vercel CLI를 사용합니다. 처음 한 번 프로젝트를 연결합니다.
+
+```bash
+vercel link --scope planderdevs-projects --project maptotable
+```
+
+미리보기로 올립니다.
+
+```bash
+vercel deploy
+```
+
+운영 주소에 올립니다.
+
+```bash
+vercel deploy --prod
+```
+
+Vercel은 PHP를 기본 지원하지 않아 커뮤니티 런타임 `vercel-php`로 실행합니다. 관련 파일은 세 개입니다.
+
+| 파일 | 하는 일 |
+| --- | --- |
+| `vercel.json` | 런타임 버전, 주소 규칙, 검색 차단 헤더(`X-Robots-Tag: noindex`)를 정합니다. |
+| `api/index.php` | 모든 PHP 요청을 받는 진입점입니다. `router.php`, `public/.htaccess`와 같은 주소 규칙으로 `public/*.php`를 실행합니다. |
+| `.vercelignore` | 배포에서 제외할 것을 정합니다. Git 배포와 CLI 배포에 모두 적용됩니다. |
+
+고칠 때 지켜야 할 것입니다.
+
+- 주소 규칙을 바꾸면 `router.php`, `public/.htaccess`, `api/index.php` 세 곳을 함께 고칩니다.
+- `public/`의 CSS·JS·사진·영상은 Vercel이 직접 전송하고, 그 밖의 요청만 PHP로 갑니다. `/`와 `*.php` 주소는 `vercel.json`에서 먼저 PHP로 보냅니다. 이 규칙을 지우면 PHP 원본이 파일로 내려갑니다.
+- `.vercelignore`에서 줄 앞의 `/`는 루트만 가리킵니다. `/media`는 원본 보관본이고 `public/media`는 배포에 필요합니다. `/`를 빼면 사진이 모두 404가 됩니다.
+- `package.json`은 배포에서 제외합니다. 올라가면 Vercel이 `npm run build`의 PHP 검사를 실행하려다 실패합니다. `public/assets/vendor`와 `public/media`는 커밋된 것을 그대로 사용하므로, 의존성이나 사진을 바꾸면 로컬에서 `npm run build`를 실행하고 결과를 커밋합니다.
+- 페이지 응답은 CDN에 1시간 보관되고 새 배포가 나가면 비워집니다.
+
+Vercel과 같은 진입점으로 로컬에서 확인하려면 아래 명령을 사용합니다.
+
+```bash
+php -S 127.0.0.1:8080 -t public api/index.php
+```
 
 ## 수정 위치
 
